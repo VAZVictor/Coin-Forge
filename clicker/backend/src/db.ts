@@ -67,6 +67,6 @@ export async function loadSave(): Promise<{ payload: string; updatedAt: number }
 export async function writeSave(payload: string, updatedAt: number): Promise<void> {
   const database = await getDb();
   database.run('DELETE FROM saves WHERE id = 1');
-  database.run('INSERT INTO saves (id, payload, updated_at) VALUES (1, ?, ?)', [payload, updatedAt]);
+  database.run('INSERT INTO saves (id, payload, updated_at) VALUES (1, ?, ?)', [payload, updatedAt]); //tokens to prevent SQL Injectoin
   persist(database);
 }
