@@ -1,6 +1,6 @@
 {
     "buildCommand": "npm run build",
-    "outputDirectory": "dist/clicker/browser",
+    "outputDirectory": "dist/clicker",
     "rewrites": [
         {
             "source": "/(.*)",
