@@ -1,6 +1,6 @@
 {
     "buildCommand": "npm run build",
-    "outputDirectory": "dist/clicker",
+    "outputDirectory": "dist/my-angular-app",
     "rewrites": [
         {
             "source": "/(.*)",
