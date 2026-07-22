@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { Clicker } from './clicker/clicker';
 import { UpgradeList } from './upgradeList/upgradeList';
 import { RebirthPanel } from './rebirthPanel/rebirthPanel';
@@ -14,6 +15,7 @@ import { NumberFormatService } from './core/services/numberFormat.service';
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    RouterOutlet,
     Clicker,
     UpgradeList,
     RebirthPanel,
@@ -27,8 +29,24 @@ import { NumberFormatService } from './core/services/numberFormat.service';
   styleUrl: './app.css'
 })
 export class App {
+  protected readonly title = signal('frontend');
+  showLogin = true;
   protected readonly saveService = inject(SaveService);
   private readonly numberFormat = inject(NumberFormatService);
+
+  constructor(private router: Router) {
+    this.showLogin = this.shouldShowLogin(this.router.url);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.showLogin = this.shouldShowLogin(event.url);
+    });
+  }
+
+  private shouldShowLogin(url: string): boolean {
+    return url.includes('/login') || url === '/';
+  }
 
   protected readonly offlineGainDisplay = computed(() => {
     const gain = this.saveService.lastOfflineGain();
