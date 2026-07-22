@@ -1,5 +1,5 @@
 {
-    "buildCommand": "npx ng build --configuration production",
+    "buildCommand": "npm run build -- --configuration production",
     "outputDirectory": "dist/clicker/browser",
     "rewrites": [
         {
