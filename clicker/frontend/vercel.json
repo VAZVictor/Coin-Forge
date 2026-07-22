@@ -1,5 +1,5 @@
 {
-    "buildCommand": "npm run build -- --configuration production",
+    "buildCommand": "npm install && npm run build",
     "outputDirectory": "dist/clicker/browser",
     "rewrites": [
         {
