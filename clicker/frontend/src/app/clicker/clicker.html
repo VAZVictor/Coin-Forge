@@ -1,0 +1,31 @@
+<div class="clickerContainer" [class.shake]="isShaking()">
+  <div class="statsPanel">
+    <div class="coinCount numeric" aria-live="polite">
+      <span class="coinValue">{{ coinsDisplay() }}</span>
+      <span class="coinLabel">coins</span>
+    </div>
+    <div class="subStats">
+      <span>{{ cpsDisplay() }} per second</span>
+      <span>{{ clickPowerDisplay() }} per click</span>
+    </div>
+  </div>
+
+  <div class="buttonStage">
+    <button
+      type="button"
+      class="mainClickButton"
+      [@squish]="squishState()"
+      (click)="onButtonClick($event)"
+      aria-label="Click to earn coins"
+    >
+      <span class="material-icons" aria-hidden="true">paid</span>
+    </button>
+
+    <div class="comboBadge numeric" [class.active]="isComboActive()" aria-live="polite">
+      <span>x{{ comboMultiplierDisplay() }}</span>
+      <div class="comboTrack">
+        <div class="comboFill" [style.width.%]="comboProgress() * 100"></div>
+      </div>
+    </div>
+  </div>
+</div>

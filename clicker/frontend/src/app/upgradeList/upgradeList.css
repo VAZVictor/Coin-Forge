@@ -1,0 +1,90 @@
+.upgradePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  width: 320px;
+}
+
+.panelTitle {
+  margin: 0 0 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.upgradeListItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.upgradeButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.upgradeButton:hover:not(:disabled) {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+}
+
+.upgradeButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.upgradeIcon {
+  color: var(--color-sky);
+  flex-shrink: 0;
+}
+
+.upgradeInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  text-align: left;
+}
+
+.upgradeName {
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: flex;
+  gap: 6px;
+}
+
+.upgradeOwned {
+  color: var(--color-ink-soft);
+  font-weight: 400;
+}
+
+.upgradeDescription {
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+}
+
+.upgradeCost {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-coin);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}

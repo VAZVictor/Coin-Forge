@@ -1,0 +1,36 @@
+@if (gameState.isRebirthUnlocked()) {
+  <section class="rebirthPanel" aria-label="Rebirth">
+    <h2 class="panelTitle">Rebirth</h2>
+
+    <p class="rebirthDescription">
+      Reset your coins and upgrades in exchange for Rebirth Tokens. Each token permanently
+      increases your base click power and production by 5 percent.
+    </p>
+
+    <dl class="rebirthStats">
+      <div class="statRow">
+        <dt>Current Tokens</dt>
+        <dd>{{ gameState.rebirthTokens() | gameNumber }}</dd>
+      </div>
+      <div class="statRow">
+        <dt>Current Bonus</dt>
+        <dd>+{{ ((gameState.rebirthMultiplier() - 1) * 100) | number: '1.0-0' }} percent</dd>
+      </div>
+      <div class="statRow highlight">
+        <dt>Tokens On Rebirth</dt>
+        <dd>+{{ gameState.projectedRebirthTokens() | gameNumber }}</dd>
+      </div>
+    </dl>
+
+    <button type="button" class="rebirthButton" (click)="onRebirth()">
+      Rebirth Now
+    </button>
+  </section>
+} @else {
+  <section class="rebirthPanel locked" aria-label="Rebirth locked">
+    <h2 class="panelTitle">Rebirth</h2>
+    <p class="rebirthDescription">
+      Unlocks once you have reached {{ 1000000 | gameNumber }} coins.
+    </p>
+  </section>
+}

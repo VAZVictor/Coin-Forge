@@ -1,0 +1,30 @@
+<aside class="upgradePanel" aria-label="Upgrades">
+  <h2 class="panelTitle">Upgrades</h2>
+
+  <ul class="upgradeListItems">
+    @for (upgrade of gameState.upgrades(); track upgrade.id) {
+      <li class="upgradeRow" [class.disabled]="!canAfford(upgrade.id)">
+        <button
+          type="button"
+          class="upgradeButton"
+          [disabled]="!canAfford(upgrade.id)"
+          (click)="onBuy(upgrade.id)"
+        >
+          <span class="material-icons upgradeIcon" aria-hidden="true">{{ upgrade.icon }}</span>
+
+          <span class="upgradeInfo">
+            <span class="upgradeName">
+              {{ upgrade.name }}
+              <span class="upgradeOwned">x{{ upgrade.owned }}</span>
+            </span>
+            <span class="upgradeDescription">{{ upgrade.description }}</span>
+          </span>
+
+          <span class="upgradeCost">
+            {{ getCost(upgrade.id) | gameNumber }}
+          </span>
+        </button>
+      </li>
+    }
+  </ul>
+</aside>

@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.gameLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 40px 16px 64px;
+}
+
+.gameHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.gameTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gameTitle .dot {
+  color: var(--color-bloom);
+}
+
+.gameMain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  max-width: 880px;
+}
+
+.clickerSlot {
+  flex: 1 1 380px;
+}
+
+.sidePanels {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 720px) {
+  .gameMain {
+    flex-direction: column;
+    align-items: center;
+  }
+}

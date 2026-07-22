@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 9921882fd325cb1d2567da3fc04896a093252462 VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784545606 +0200	commit (initial): initial commit
+9921882fd325cb1d2567da3fc04896a093252462 5dfa46665a710e454fb05991764b145975a4768b VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784724437 +0200	commit: started working on project
+5dfa46665a710e454fb05991764b145975a4768b 8c88b9a5377ce73cfd02859404c83ed321a3fd00 VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784724469 +0200	commit: clicker component has been started on - animations work
+8c88b9a5377ce73cfd02859404c83ed321a3fd00 63b9e51ad68ee6586d5bbe2b2a198cc94ac491d8 VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784724496 +0200	commit: sidebar with upgrades exists
+63b9e51ad68ee6586d5bbe2b2a198cc94ac491d8 05b5089c8b050c4e91a84b2e72d3ad817a6317f4 VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784724512 +0200	commit: rebirth panel has been added
+05b5089c8b050c4e91a84b2e72d3ad817a6317f4 3d06dad54c942e538bd5bf6f7b07936866d92da9 VAZVictor <victor.ehrenmuelller.jensen@gmail.com> 1784724530 +0200	commit: logic to existing components has been added
