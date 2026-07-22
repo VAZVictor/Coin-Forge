@@ -1,0 +1,10 @@
+{
+    "buildCommand": "ng build --configuration production",
+    "outputDirectory": "dist/clicker/browser",
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
