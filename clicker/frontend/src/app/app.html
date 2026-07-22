@@ -1,3 +1,7 @@
+@if (showLogin) {
+<!-- Empty container to maintain layout -->
+<div class="login-placeholder"></div>
+} @else {
 <div class="gameLayout">
   @if (offlineGainDisplay(); as gain) {
     <div class="offlineBanner" role="status">
@@ -28,3 +32,4 @@
     </div>
   </main>
 </div>
+}
