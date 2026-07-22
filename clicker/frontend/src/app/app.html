@@ -1,15 +1,30 @@
 <div class="gameLayout">
+  @if (offlineGainDisplay(); as gain) {
+    <div class="offlineBanner" role="status">
+      <span>Welcome back. You earned {{ gain }} coins while away.</span>
+      <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
+        <span class="material-icons" aria-hidden="true">close</span>
+      </button>
+    </div>
+  }
+
   <header class="gameHeader">
-    <span class="material-icons" aria-hidden="true">bolt</span>
     <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
   </header>
 
   <main class="gameMain">
-    <app-clicker class="clickerSlot" />
+    <div class="primaryColumn">
+      <app-clicker class="clickerSlot" />
+      <app-achievements />
+    </div>
 
     <div class="sidePanels">
       <app-upgrade-list />
       <app-rebirth-panel />
+      <app-prestige />
+      <app-reincarnation />
+      <app-ascension />
+      <app-abdication />
     </div>
   </main>
 </div>

@@ -1,0 +1,37 @@
+@if (gameState.isAscensionUnlocked()) {
+  <section class="ascensionPanel" aria-label="Ascension">
+    <h2 class="panelTitle">Ascension</h2>
+
+    <p class="ascensionDescription">
+      Become a divine entity to earn Divinity. Each point doubles the output of
+      everything below it, and resets your coins, upgrades, Rebirth Tokens, World
+      Shards, and Souls.
+    </p>
+
+    <dl class="ascensionStats">
+      <div class="statRow">
+        <dt>Current Divinity</dt>
+        <dd>{{ gameState.divinity() | gameNumber }}</dd>
+      </div>
+      <div class="statRow">
+        <dt>Current Bonus</dt>
+        <dd>{{ gameState.divinityMultiplier() | gameNumber }}x</dd>
+      </div>
+      <div class="statRow highlight">
+        <dt>Divinity On Ascension</dt>
+        <dd>+{{ gameState.projectedDivinity() | gameNumber }}</dd>
+      </div>
+    </dl>
+
+    <button type="button" class="ascensionButton" (click)="onAscend()">
+      Ascend
+    </button>
+  </section>
+} @else {
+  <section class="ascensionPanel locked" aria-label="Ascension locked">
+    <h2 class="panelTitle">Ascension</h2>
+    <p class="ascensionDescription">
+      Unlocks once you have reached {{ 100000000000000000000000000000000000 | gameNumber }} coins. <!-- 10e35 -->
+    </p>
+  </section>
+}

@@ -1,0 +1,24 @@
+<section class="achievementsPanel" aria-label="Achievements">
+  <div class="achievementsHeader">
+    <h2 class="panelTitle">Achievements</h2>
+    <span class="achievementsCount">
+      {{ achievementsService.unlockedCount() }} / {{ achievementsService.totalCount }}
+    </span>
+  </div>
+
+  <ul class="achievementsGrid">
+    @for (achievement of achievementsService.achievements(); track achievement.id) {
+      <li
+        class="achievementTile"
+        [class.unlocked]="achievement.unlocked"
+        [attr.aria-label]="achievement.unlocked ? achievement.name + ', unlocked' : achievement.name + ', locked'"
+      >
+        <span class="material-icons achievementIcon" aria-hidden="true">
+          {{ achievement.unlocked ? achievement.icon : 'lock' }}
+        </span>
+        <span class="achievementName">{{ achievement.name }}</span>
+        <span class="achievementDescription">{{ achievement.description }}</span>
+      </li>
+    }
+  </ul>
+</section>

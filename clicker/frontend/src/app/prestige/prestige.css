@@ -1,0 +1,64 @@
+.prestigePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  width: 320px;
+}
+
+.prestigePanel.locked {
+  opacity: 0.65;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.prestigeDescription {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  line-height: 1.45;
+}
+
+.prestigeStats {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+}
+
+.statRow.highlight dd {
+  color: var(--color-sky);
+  font-weight: 700;
+}
+
+.prestigeButton {
+  margin-top: 4px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-sky);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: filter var(--transition-fast);
+}
+
+.prestigeButton:hover {
+  filter: brightness(1.06);
+}

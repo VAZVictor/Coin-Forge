@@ -1,0 +1,37 @@
+@if (gameState.isPrestigeUnlocked()) {
+  <section class="prestigePanel" aria-label="Prestige">
+    <h2 class="panelTitle">Prestige</h2>
+
+    <p class="prestigeDescription">
+      Shatter your current reality to earn World Shards. Each shard multiplies your
+      Rebirth layer's output by 1.5 times, and resets your coins, upgrades, and Rebirth
+      Tokens.
+    </p>
+
+    <dl class="prestigeStats">
+      <div class="statRow">
+        <dt>Current Shards</dt>
+        <dd>{{ gameState.worldShards() | gameNumber }}</dd>
+      </div>
+      <div class="statRow">
+        <dt>Current Bonus</dt>
+        <dd>{{ gameState.shardMultiplier() | number: '1.2-2' }}x</dd>
+      </div>
+      <div class="statRow highlight">
+        <dt>Shards On Prestige</dt>
+        <dd>+{{ gameState.projectedWorldShards() | gameNumber }}</dd>
+      </div>
+    </dl>
+
+    <button type="button" class="prestigeButton" (click)="onPrestige()">
+      Reset The World
+    </button>
+  </section>
+} @else {
+  <section class="prestigePanel locked" aria-label="Prestige locked">
+    <h2 class="panelTitle">Prestige</h2>
+    <p class="prestigeDescription">
+      Unlocks once you have reached {{ 1000000000000 | gameNumber }} coins. <!--10 Billion || 10 Mrd.-->
+    </p>
+  </section>
+}

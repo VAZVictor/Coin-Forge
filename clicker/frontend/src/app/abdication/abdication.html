@@ -1,0 +1,37 @@
+@if (gameState.isAbdicationUnlocked()) {
+  <section class="abdicationPanel" aria-label="Abdication">
+    <h2 class="panelTitle">Abdication</h2>
+
+    <p class="abdicationDescription">
+      Step down from the ultimate throne to earn Legacy. Legacy is permanent, it is
+      never reset by anything, including a future Abdication, and each point gives a
+      lasting times 10 multiplier to the entire game.
+    </p>
+
+    <dl class="abdicationStats">
+      <div class="statRow">
+        <dt>Current Legacy</dt>
+        <dd>{{ gameState.legacy() | gameNumber }}</dd>
+      </div>
+      <div class="statRow">
+        <dt>Current Bonus</dt>
+        <dd>{{ gameState.legacyMultiplier() | gameNumber }}x</dd>
+      </div>
+      <div class="statRow highlight">
+        <dt>Legacy On Abdication</dt>
+        <dd>+{{ gameState.projectedLegacy() | gameNumber }}</dd>
+      </div>
+    </dl>
+
+    <button type="button" class="abdicationButton" (click)="onAbdicate()">
+      Abdicate The Throne
+    </button>
+  </section>
+} @else {
+  <section class="abdicationPanel locked" aria-label="Abdication locked">
+    <h2 class="panelTitle">Abdication</h2>
+    <p class="abdicationDescription">
+      Unlocks once you have reached {{ 1000000000000000000000000000000000000000000000000000000000000 | gameNumber }} coins. <!-- 10e60 -->
+    </p>
+  </section>
+}
