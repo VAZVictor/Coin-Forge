@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { Clicker } from './clicker/clicker';
 import { UpgradeList } from './upgradeList/upgradeList';
 import { RebirthPanel } from './rebirthPanel/rebirthPanel';
@@ -10,12 +9,13 @@ import { Abdication } from './abdication/abdication';
 import { Achievements } from './achievements/achievements';
 import { SaveService } from './core/services/save.service';
 import { NumberFormatService } from './core/services/numberFormat.service';
+import { Login } from './login/login';
 
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    RouterOutlet,
+    Login,
     Clicker,
     UpgradeList,
     RebirthPanel,
@@ -29,23 +29,13 @@ import { NumberFormatService } from './core/services/numberFormat.service';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('frontend');
-  showLogin = true;
   protected readonly saveService = inject(SaveService);
   private readonly numberFormat = inject(NumberFormatService);
 
-  constructor(private router: Router) {
-    this.showLogin = this.shouldShowLogin(this.router.url);
+  protected readonly showLogin = signal(true);
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      this.showLogin = this.shouldShowLogin(event.url);
-    });
-  }
-
-  private shouldShowLogin(url: string): boolean {
-    return url.includes('/login') || url === '/';
+  protected onLoggedIn(): void {
+    this.showLogin.set(false);
   }
 
   protected readonly offlineGainDisplay = computed(() => {

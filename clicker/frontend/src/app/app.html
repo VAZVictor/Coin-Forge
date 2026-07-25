@@ -1,35 +1,34 @@
-@if (showLogin) {
-<!-- Empty container to maintain layout -->
-<div class="login-placeholder"></div>
+@if (showLogin()) {
+  <app-login (loggedIn)="onLoggedIn()" />
 } @else {
-<div class="gameLayout">
-  @if (offlineGainDisplay(); as gain) {
-    <div class="offlineBanner" role="status">
-      <span>Welcome back. You earned {{ gain }} coins while away.</span>
-      <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
-        <span class="material-icons" aria-hidden="true">close</span>
-      </button>
-    </div>
-  }
+  <div class="gameLayout">
+    @if (offlineGainDisplay(); as gain) {
+      <div class="offlineBanner" role="status">
+        <span>Welcome back. You earned {{ gain }} coins while away.</span>
+        <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>
+    }
 
-  <header class="gameHeader">
-    <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
-  </header>
+    <header class="gameHeader">
+      <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
+    </header>
 
-  <main class="gameMain">
-    <div class="primaryColumn">
-      <app-clicker class="clickerSlot" />
-      <app-achievements />
-    </div>
+    <main class="gameMain">
+      <div class="primaryColumn">
+        <app-clicker class="clickerSlot" />
+        <app-achievements />
+      </div>
 
-    <div class="sidePanels">
-      <app-upgrade-list />
-      <app-rebirth-panel />
-      <app-prestige />
-      <app-reincarnation />
-      <app-ascension />
-      <app-abdication />
-    </div>
-  </main>
-</div>
+      <div class="sidePanels">
+        <app-upgrade-list />
+        <app-rebirth-panel />
+        <app-prestige />
+        <app-reincarnation />
+        <app-ascension />
+        <app-abdication />
+      </div>
+    </main>
+  </div>
 }
