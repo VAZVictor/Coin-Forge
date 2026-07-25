@@ -1,0 +1,257 @@
+:host {
+    display: block;
+}
+
+.loginStage {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--color-bg, #f3f6fb);
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 380px;
+    background: var(--color-surface, #ffffff);
+    border: 1px solid var(--color-border, #e1e6ef);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-card, 0 1px 2px rgba(24, 28, 40, 0.04), 0 10px 24px -14px rgba(24, 28, 40, 0.18));
+    padding: 32px 28px;
+    text-align: center;
+}
+
+.loginCard.shake {
+    animation: loginShake 400ms ease;
+}
+
+.mascotWrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.mascotCoin {
+    font-size: 48px;
+    color: var(--color-coin, #b9862f);
+    animation: mascotBob 2.4s ease-in-out infinite;
+}
+
+.loginTitle {
+    margin: 4px 0 4px;
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-ink, #202433);
+}
+
+.loginTitle .dot {
+    color: var(--color-bloom, #e8749f);
+}
+
+.loginSubtitle {
+    margin: 0 0 24px;
+    font-size: 0.85rem;
+    color: var(--color-ink-soft, #6b7280);
+    line-height: 1.4;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fieldLabel {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-ink-soft, #6b7280);
+}
+
+.fieldInput {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-md, 10px);
+    border: 1px solid var(--color-border, #e1e6ef);
+    background: var(--color-surface, #ffffff);
+    color: var(--color-ink, #202433);
+    font-size: 0.92rem;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.fieldInput:focus-visible {
+    outline: none;
+    border-color: var(--color-sky, #4f9fdb);
+    box-shadow: 0 0 0 3px var(--color-sky-soft, #e8f3fb);
+}
+
+.fieldInput[aria-invalid="true"] {
+    border-color: var(--color-bloom, #e8749f);
+}
+
+.fieldError {
+    font-size: 0.72rem;
+    color: var(--color-bloom, #e8749f);
+}
+
+.passwordRow {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.passwordRow .fieldInput {
+    padding-right: 40px;
+}
+
+.passwordToggle {
+    position: absolute;
+    right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    color: var(--color-ink-soft, #6b7280);
+}
+
+.passwordToggle:hover {
+    background: var(--color-surface-muted, #eef2f8);
+}
+
+.passwordToggle .material-icons {
+    font-size: 18px;
+}
+
+.rememberRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--color-ink-soft, #6b7280);
+}
+
+.rememberCheckbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-sky, #4f9fdb);
+}
+
+.statusMessage {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-sky, #4f9fdb);
+    text-align: center;
+}
+
+.submitButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border-radius: var(--radius-md, 10px);
+    background: linear-gradient(135deg, var(--color-sky, #4f9fdb), var(--color-bloom, #e8749f));
+    color: white;
+    font-weight: 700;
+    font-size: 0.94rem;
+    transition: transform 140ms ease, filter 140ms ease;
+}
+
+.submitButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.submitButton:disabled {
+    opacity: 0.75;
+    cursor: wait;
+}
+
+.spinningCoin {
+    font-size: 18px;
+    animation: coinSpin 700ms linear infinite;
+}
+
+.loginFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 22px;
+}
+
+.footerLink {
+    font-size: 0.8rem;
+    color: var(--color-ink-soft, #6b7280);
+    text-decoration: none;
+}
+
+.footerLink:hover {
+    color: var(--color-sky, #4f9fdb);
+    text-decoration: underline;
+}
+
+@keyframes mascotBob {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-6px) rotate(8deg);
+    }
+}
+
+@keyframes coinSpin {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes loginShake {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-6px, 0);
+    }
+
+    40% {
+        transform: translate(6px, 0);
+    }
+
+    60% {
+        transform: translate(-4px, 0);
+    }
+
+    80% {
+        transform: translate(4px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .mascotCoin,
+    .spinningCoin,
+    .loginCard.shake {
+        animation: none;
+    }
+}
