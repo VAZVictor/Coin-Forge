@@ -15,9 +15,18 @@ interface MessageResponse {
 
 function extractErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof HttpErrorResponse) {
-    const body = error.error as { error?: string } | null;
-    if (body && typeof body.error === 'string') {
+    const body = error.error as { error?: string; message?: string } | null;
+
+    if (body && typeof body.error === 'string' && body.error.trim()) {
       return body.error;
+    }
+
+    if (body && typeof body.message === 'string' && body.message.trim()) {
+      return body.message;
+    }
+
+    if (typeof error.error === 'string' && error.error.trim()) {
+      return error.error;
     }
   }
   return fallback;

@@ -241,7 +241,15 @@ app.get('/api/save', requireAuth, async (req: AuthenticatedRequest, res) => {
       res.status(404).json({ found: false });
       return;
     }
-    res.json({ found: true, payload: JSON.parse(save.payload), updatedAt: save.updatedAt });
+
+    let parsedPayload: unknown = null;
+    try {
+      parsedPayload = JSON.parse(save.payload);
+    } catch {
+      console.warn('Saved payload was not valid JSON; treating it as empty.');
+    }
+
+    res.json({ found: true, payload: parsedPayload, updatedAt: save.updatedAt });
   } catch (error) {
     console.error('Failed to load save', error);
     res.status(500).json({ error: 'Failed to load save' });
