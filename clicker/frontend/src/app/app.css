@@ -36,8 +36,11 @@
 
 .gameHeader {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 10px;
+  width: 100%;
+  max-width: 880px;
 }
 
 .gameTitle {
@@ -49,6 +52,61 @@
 
 .gameTitle .dot {
   color: var(--color-bloom);
+}
+
+.accountBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.accountEmail {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.logoutButton:hover {
+  border-color: var(--color-bloom);
+  color: var(--color-bloom);
+}
+
+.logoutButton .material-icons {
+  font-size: 16px;
+}
+
+.sessionLoading {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+}
+
+.sessionLoading .spinningCoin {
+  font-size: 20px;
+  color: var(--color-coin);
+  animation: coinSpin 700ms linear infinite;
+}
+
+@keyframes coinSpin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
 
 .gameMain {

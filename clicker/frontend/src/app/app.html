@@ -1,5 +1,17 @@
-@if (showLogin()) {
-  <app-login (loggedIn)="onLoggedIn()" />
+@if (authService.isCheckingSession()) {
+  <div class="sessionLoading" role="status">
+    <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
+    <span>Checking who you are...</span>
+  </div>
+} @else if (!authService.isAuthenticated()) {
+  @switch (authView()) {
+    @case ('login') {
+      <app-login (forgotPasswordRequested)="showForgotPassword()" />
+    }
+    @case ('forgotPassword') {
+      <app-forgot-password (backToLogin)="showLogin()" />
+    }
+  }
 } @else {
   <div class="gameLayout">
     @if (offlineGainDisplay(); as gain) {
@@ -13,6 +25,14 @@
 
     <header class="gameHeader">
       <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
+
+      <div class="accountBar">
+        <span class="accountEmail">{{ authService.currentUser()?.email }}</span>
+        <button type="button" class="logoutButton" (click)="onLogOut()">
+          <span class="material-icons" aria-hidden="true">logout</span>
+          Log out
+        </button>
+      </div>
     </header>
 
     <main class="gameMain">
