@@ -1,64 +1,116 @@
 <div class="loginStage">
-    <div class="loginCard" [class.shake]="hasShakeError()">
-        <div class="mascotWrap" aria-hidden="true">
-            <span class="material-icons mascotCoin">paid</span>
-        </div>
-
-        <h1 class="loginTitle">Welcome back, high roller<span class="dot">.</span></h1>
-        <p class="loginSubtitle">Punch in your digits. We promise not to laugh if you forgot your password.</p>
-
-        <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
-            <div class="fieldGroup">
-                <label class="fieldLabel" for="email">Email</label>
-                <input id="email" type="email" class="fieldInput" formControlName="email"
-                    placeholder="sonja@geburtstagskind.ag" autocomplete="email"
-                    [attr.aria-invalid]="loginForm.controls.email.invalid && loginForm.controls.email.touched" />
-                @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
-                <span class="fieldError">That does not look like a real email, friend.</span>
-                }
-            </div>
-
-            <div class="fieldGroup">
-                <label class="fieldLabel" for="password">Password</label>
-                <div class="passwordRow">
-                    <input [type]="isPasswordVisible() ? 'text' : 'password'" id="password" class="fieldInput"
-                        formControlName="password" placeholder="••••••••" autocomplete="current-password"
-                        [attr.aria-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched" />
-                    <button type="button" class="passwordToggle" (click)="togglePasswordVisibility()"
-                        [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'">
-                        <span class="material-icons" aria-hidden="true">
-                            {{ isPasswordVisible() ? 'visibility_off' : 'visibility' }}
-                        </span>
-                    </button>
-                </div>
-                @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
-                <span class="fieldError">Needs at least 6 characters. Yes, "coins123" counts.</span>
-                }
-            </div>
-
-            <label class="rememberRow">
-                <input type="checkbox" formControlName="rememberMe" class="rememberCheckbox" />
-                <span>Keep me logged in, I click a lot</span>
-            </label>
-
-            @if (statusMessage(); as message) {
-            <p class="statusMessage" role="status">{{ message }}</p>
-            }
-
-            <button type="submit" class="submitButton" [disabled]="isSubmitting()">
-                @if (isSubmitting()) {
-                <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
-                Spinning the wheel...
-                } @else {
-                Let's gooo
-                <span class="material-icons" aria-hidden="true">arrow_forward</span>
-                }
-            </button>
-        </form>
-
-        <div class="loginFooter">
-            <a href="#" class="footerLink">New here? Start your empire</a>
-            <a href="#" class="footerLink">Forgot password? (story of my life)</a>
-        </div>
+  <div class="loginCard" [class.shake]="hasShakeError()">
+    <div class="mascotWrap" aria-hidden="true">
+      <span class="material-icons mascotCoin">paid</span>
     </div>
+
+    @if (mode() === 'signIn') {
+      <h1 class="loginTitle">Welcome back, high roller<span class="dot">.</span></h1>
+      <p class="loginSubtitle">Punch in your digits. We promise not to laugh if you forgot your password.</p>
+    } @else {
+      <h1 class="loginTitle">Join the empire<span class="dot">.</span></h1>
+      <p class="loginSubtitle">One account, infinite clicking. Choose your credentials wisely.</p>
+    }
+
+    <form class="loginForm" [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="fieldGroup">
+        <label class="fieldLabel" for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="fieldInput"
+          formControlName="email"
+          placeholder="highroller@coinforge.gg"
+          autocomplete="email"
+          [attr.aria-invalid]="authForm.controls.email.invalid && authForm.controls.email.touched"
+        />
+        @if (authForm.controls.email.invalid && authForm.controls.email.touched) {
+          <span class="fieldError">That does not look like a real email, friend.</span>
+        }
+      </div>
+
+      <div class="fieldGroup">
+        <label class="fieldLabel" for="password">Password</label>
+        <div class="passwordRow">
+          <input
+            [type]="isPasswordVisible() ? 'text' : 'password'"
+            id="password"
+            class="fieldInput"
+            formControlName="password"
+            placeholder="••••••••"
+            [autocomplete]="mode() === 'signUp' ? 'new-password' : 'current-password'"
+            [attr.aria-invalid]="authForm.controls.password.invalid && authForm.controls.password.touched"
+          />
+          <button
+            type="button"
+            class="passwordToggle"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'"
+          >
+            <span class="material-icons" aria-hidden="true">
+              {{ isPasswordVisible() ? 'visibility_off' : 'visibility' }}
+            </span>
+          </button>
+        </div>
+        @if (authForm.controls.password.invalid && authForm.controls.password.touched) {
+          <span class="fieldError">Needs at least 8 characters. Yes, "coinsforever" counts.</span>
+        }
+      </div>
+
+      @if (mode() === 'signUp') {
+        <div class="fieldGroup">
+          <label class="fieldLabel" for="confirmPassword">Confirm password</label>
+          <input
+            [type]="isPasswordVisible() ? 'text' : 'password'"
+            id="confirmPassword"
+            class="fieldInput"
+            formControlName="confirmPassword"
+            placeholder="••••••••"
+            autocomplete="new-password"
+          />
+        </div>
+      }
+
+      <div class="formRow">
+        <label class="rememberRow">
+          <input type="checkbox" formControlName="rememberMe" class="rememberCheckbox" />
+          <span>Keep me logged in, I click a lot</span>
+        </label>
+
+        @if (mode() === 'signIn') {
+          <button type="button" class="forgotLink" (click)="onForgotPassword()">
+            Forgot password?
+          </button>
+        }
+      </div>
+
+      @if (statusMessage(); as message) {
+        <p class="statusMessage" role="status">{{ message }}</p>
+      }
+
+      <button type="submit" class="submitButton" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+          <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
+          Spinning the wheel...
+        } @else if (mode() === 'signIn') {
+          Let's gooo
+        } @else {
+          Start my empire
+        }
+        <span class="material-icons" aria-hidden="true">arrow_forward</span>
+      </button>
+    </form>
+
+    <div class="loginFooter">
+      @if (mode() === 'signIn') {
+        <button type="button" class="footerLink" (click)="switchMode()">
+          New here? Start your empire
+        </button>
+      } @else {
+        <button type="button" class="footerLink" (click)="switchMode()">
+          Already an emperor? Sign in
+        </button>
+      }
+    </div>
+  </div>
 </div>
