@@ -1,30 +1,54 @@
-<div class="gameLayout">
-  @if (offlineGainDisplay(); as gain) {
-    <div class="offlineBanner" role="status">
-      <span>Welcome back. You earned {{ gain }} coins while away.</span>
-      <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
-        <span class="material-icons" aria-hidden="true">close</span>
-      </button>
-    </div>
+@if (authService.isCheckingSession()) {
+  <div class="sessionLoading" role="status">
+    <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
+    <span>Checking who you are...</span>
+  </div>
+} @else if (!authService.isAuthenticated()) {
+  @switch (authView()) {
+    @case ('login') {
+      <app-login (forgotPasswordRequested)="showForgotPassword()" />
+    }
+    @case ('forgotPassword') {
+      <app-forgot-password (backToLogin)="showLogin()" />
+    }
   }
+} @else {
+  <div class="gameLayout">
+    @if (offlineGainDisplay(); as gain) {
+      <div class="offlineBanner" role="status">
+        <span>Welcome back. You earned {{ gain }} coins while away.</span>
+        <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>
+    }
 
-  <header class="gameHeader">
-    <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
-  </header>
+    <header class="gameHeader">
+      <h1 class="gameTitle">Coin Forge<span class="dot">.</span></h1>
 
-  <main class="gameMain">
-    <div class="primaryColumn">
-      <app-clicker class="clickerSlot" />
-      <app-achievements />
-    </div>
+      <div class="accountBar">
+        <span class="accountEmail">{{ authService.currentUser()?.email }}</span>
+        <button type="button" class="logoutButton" (click)="onLogOut()">
+          <span class="material-icons" aria-hidden="true">logout</span>
+          Log out
+        </button>
+      </div>
+    </header>
 
-    <div class="sidePanels">
-      <app-upgrade-list />
-      <app-rebirth-panel />
-      <app-prestige />
-      <app-reincarnation />
-      <app-ascension />
-      <app-abdication />
-    </div>
-  </main>
-</div>
+    <main class="gameMain">
+      <div class="primaryColumn">
+        <app-clicker class="clickerSlot" />
+        <app-achievements />
+      </div>
+
+      <div class="sidePanels">
+        <app-upgrade-list />
+        <app-rebirth-panel />
+        <app-prestige />
+        <app-reincarnation />
+        <app-ascension />
+        <app-abdication />
+      </div>
+    </main>
+  </div>
+}

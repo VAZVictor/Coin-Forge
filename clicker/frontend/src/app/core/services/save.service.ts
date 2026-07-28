@@ -1,16 +1,12 @@
-import { Injectable, afterNextRender, inject, signal } from '@angular/core';
+import { Injectable, PLATFORM_ID, effect, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { GameStateService } from './gameState.service';
+import { AuthService } from './auth.service';
 import { GameSavePayload } from '../models/save.model';
+import { BACKEND_BASE_URL } from './backend-config';
 
-/**
- * The Express + sql.js save API lives in the separate "backend" workspace
- * (see clicker/backend/src/server.ts and db.ts), started on its own port.
- * Point this at wherever that server is actually reachable in your setup;
- * for local development that is the backend's `npm start` on port 4000.
- */
-const SAVE_API_BASE_URL = 'http://localhost:4000';
 const AUTOSAVE_INTERVAL_MS = 10000;
 
 interface SaveApiGetResponse {
@@ -25,32 +21,57 @@ interface SaveApiGetResponse {
 export class SaveService {
   private readonly http = inject(HttpClient);
   private readonly gameState = inject(GameStateService);
+  private readonly authService = inject(AuthService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /** Coins gained while the app was closed, shown once as a welcome back banner. */
   readonly lastOfflineGain = signal<number | null>(null);
   readonly isConnectedToServer = signal<boolean>(true);
 
   private autosaveHandle: ReturnType<typeof setInterval> | null = null;
+  private hasLoadedForCurrentSession = false;
 
   constructor() {
-    // afterNextRender guarantees this only runs in the browser, never during
-    // SSR, since talking to a save API and listening for window events both
-    // require a real browser environment.
-    afterNextRender(() => {
-      void this.initialize();
+    if (!this.isBrowser) {
+      return;
+    }
+
+    // Saves are now tied to an account, so there is nothing to load or
+    // autosave until AuthService reports a logged-in user. This effect
+    // starts the save cycle the moment that becomes true (right after
+    // login/signup, or immediately if a session cookie was already valid
+    // on page load) and stops it again on logout.
+    effect(() => {
+      if (this.authService.isAuthenticated()) {
+        void this.handleSessionStart();
+      } else {
+        this.handleSessionEnd();
+      }
     });
+
+    window.addEventListener('beforeunload', () => this.saveOnUnload());
   }
 
-  private async initialize(): Promise<void> {
+  private async handleSessionStart(): Promise<void> {
+    if (this.hasLoadedForCurrentSession) {
+      return;
+    }
+    this.hasLoadedForCurrentSession = true;
     await this.loadFromServer();
     this.startAutosave();
-    window.addEventListener('beforeunload', () => this.saveOnUnload());
+  }
+
+  private handleSessionEnd(): void {
+    this.hasLoadedForCurrentSession = false;
+    this.stopAutosave();
   }
 
   private async loadFromServer(): Promise<void> {
     try {
       const response = await firstValueFrom(
-        this.http.get<SaveApiGetResponse>(`${SAVE_API_BASE_URL}/api/save`)
+        this.http.get<SaveApiGetResponse>(`${BACKEND_BASE_URL}/api/save`, {
+          withCredentials: true
+        })
       );
 
       if (response.found && response.payload && response.updatedAt) {
@@ -66,8 +87,8 @@ export class SaveService {
 
       this.isConnectedToServer.set(true);
     } catch {
-      // No save yet, or the backend is not running. Either way, continue
-      // with a fresh game rather than blocking the app.
+      // No save yet for this account, or the backend is not running.
+      // Either way, continue with a fresh game rather than blocking the app.
       this.isConnectedToServer.set(false);
     }
   }
@@ -83,10 +104,11 @@ export class SaveService {
 
     try {
       await firstValueFrom(
-        this.http.post(`${SAVE_API_BASE_URL}/api/save`, {
-          payload,
-          updatedAt: Date.now()
-        })
+        this.http.post(
+          `${BACKEND_BASE_URL}/api/save`,
+          { payload, updatedAt: Date.now() },
+          { withCredentials: true }
+        )
       );
       this.isConnectedToServer.set(true);
     } catch {
@@ -95,14 +117,21 @@ export class SaveService {
   }
 
   private saveOnUnload(): void {
+    if (!this.authService.isAuthenticated()) {
+      return;
+    }
+
     const payload = this.gameState.serializeState();
     const body = JSON.stringify({ payload, updatedAt: Date.now() });
 
     // sendBeacon is used here instead of HttpClient because a normal request
     // can be cancelled by the browser mid flight once the page starts
-    // unloading, while a beacon is guaranteed to be delivered.
+    // unloading, while a beacon is guaranteed to be delivered. Note that
+    // sendBeacon always sends cookies for same-origin requests, and does so
+    // for cross-origin ones too as long as the browser already holds the
+    // cookie, which it does here since login set it.
     navigator.sendBeacon(
-      `${SAVE_API_BASE_URL}/api/save`,
+      `${BACKEND_BASE_URL}/api/save`,
       new Blob([body], { type: 'application/json' })
     );
   }

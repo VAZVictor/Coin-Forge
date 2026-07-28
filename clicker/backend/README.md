@@ -26,6 +26,22 @@ For a complete list of available schematics (such as `components`, `directives`,
 ng generate --help
 ```
 
+## Environment variables
+
+The backend expects a few environment variables for deployment:
+
+```bash
+JWT_SECRET=replace-with-a-long-random-secret
+FRONTEND_ORIGIN=http://localhost:4200
+NODE_ENV=development
+# For cross-domain deployments, use:
+# COOKIE_SAME_SITE=none
+# COOKIE_SECURE=true
+# COOKIE_DOMAIN=your-domain.example
+```
+
+If you do not set JWT_SECRET, the server still starts but logs a warning and uses a development fallback.
+
 ## Building
 
 To build the project run:

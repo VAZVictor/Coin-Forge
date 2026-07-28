@@ -2,19 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-import { Login } from './login';
+import { ForgotPassword } from './forgot-password';
 
-describe('Login', () => {
-  let component: Login;
-  let fixture: ComponentFixture<Login>;
+describe('ForgotPassword', () => {
+  let component: ForgotPassword;
+  let fixture: ComponentFixture<ForgotPassword>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Login],
+      imports: [ForgotPassword],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Login);
+    fixture = TestBed.createComponent(ForgotPassword);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
