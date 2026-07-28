@@ -66,7 +66,10 @@ const isProduction = process.env['NODE_ENV'] === 'production';
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-app.use(cors({ origin: FRONTEND_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: FRONTEND_ORIGIN,
+  credentials: true // Required of cookies!
+}));
 app.use(express.json({ limit: '256kb' }));
 app.use(cookieParser());
 
