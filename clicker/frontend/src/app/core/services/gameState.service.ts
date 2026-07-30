@@ -109,6 +109,7 @@ export class GameStateService {
   readonly totalClicksAllTime = signal<number>(0);
   readonly totalCoinsEarnedAllTime = signal<number>(0);
   readonly totalUpgradesPurchasedAllTime = signal<number>(0);
+  readonly totalPlaytimeSeconds = signal<number>(0);
   readonly rebirthCount = signal<number>(0);
   readonly prestigeCount = signal<number>(0);
   readonly reincarnationCount = signal<number>(0);
@@ -200,12 +201,14 @@ export class GameStateService {
     this.startGameLoop();
   }
 
-  private startGameLoop(): void {
+    private startGameLoop(): void {
     this.loopHandle = setInterval(() => {
       const gain = this.cps() / 10;
       if (gain > 0) {
         this.addCoins(gain);
       }
+      // Track active playtime: add 0.1 seconds (100ms) per loop iteration
+      this.totalPlaytimeSeconds.update(current => current + (LOOP_INTERVAL_MS / 1000));
     }, LOOP_INTERVAL_MS);
   }
 
@@ -361,7 +364,7 @@ export class GameStateService {
     return gained;
   }
 
-  serializeState(): GameSavePayload {
+    serializeState(): GameSavePayload {
     return {
       coins: this.coins(),
       upgrades: this.upgrades().map(upgrade => ({ id: upgrade.id, owned: upgrade.owned })),
@@ -373,6 +376,7 @@ export class GameStateService {
       totalClicksAllTime: this.totalClicksAllTime(),
       totalCoinsEarnedAllTime: this.totalCoinsEarnedAllTime(),
       totalUpgradesPurchasedAllTime: this.totalUpgradesPurchasedAllTime(),
+      totalPlaytimeSeconds: this.totalPlaytimeSeconds(),
       rebirthCount: this.rebirthCount(),
       prestigeCount: this.prestigeCount(),
       reincarnationCount: this.reincarnationCount(),
@@ -381,7 +385,7 @@ export class GameStateService {
     };
   }
 
-  loadState(payload: GameSavePayload): void {
+    loadState(payload: GameSavePayload): void {
     this.coins.set(payload.coins);
     this.upgrades.update(list =>
       list.map(upgrade => {
@@ -397,6 +401,7 @@ export class GameStateService {
     this.totalClicksAllTime.set(payload.totalClicksAllTime);
     this.totalCoinsEarnedAllTime.set(payload.totalCoinsEarnedAllTime);
     this.totalUpgradesPurchasedAllTime.set(payload.totalUpgradesPurchasedAllTime);
+    this.totalPlaytimeSeconds.set(payload.totalPlaytimeSeconds ?? 0);
     this.rebirthCount.set(payload.rebirthCount);
     this.prestigeCount.set(payload.prestigeCount);
     this.reincarnationCount.set(payload.reincarnationCount);
