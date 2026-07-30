@@ -6,6 +6,7 @@ export interface UpgradeSaveEntry {
 export interface GameSavePayload {
   coins: number;
   upgrades: UpgradeSaveEntry[];
+  totalPlaytimeSeconds: number;
   rebirthTokens: number;
   worldShards: number;
   souls: number;
