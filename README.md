@@ -33,7 +33,8 @@ A clicker is only as good as its feedback. The UI is heavily optimized for tacti
 
 ### Quality of Life
 - **Auto-Save:** Game state is continuously serialized to a SQLite database.
-- **Achievements:** Milestone tracking across clicking, upgrading, and prestige layers.
+- Auto-/Multi Buy: Many Upgrades can be bought at once and be automated. 
+- **Achievements:** Milestone tracking across clicking, upgrading, prestige layers and time spent in the game.
 
 ---
 
