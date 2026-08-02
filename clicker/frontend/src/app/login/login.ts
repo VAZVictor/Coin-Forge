@@ -1,19 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
+import { ForgotPassword } from './forgot-password/forgot-password';
 
 type AuthMode = 'signIn' | 'signUp';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ForgotPassword],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class Login {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   readonly forgotPasswordRequested = output<void>();
 
@@ -78,9 +82,7 @@ export class Login {
         return;
       }
 
-      // On success AuthService.currentUser updates, and the root App
-      // component reacts to that signal to swap the login screen out for
-      // the game, so there is nothing further to do here.
+      void this.router.navigate(['/clicker']);
     });
   }
 
