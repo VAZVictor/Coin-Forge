@@ -11,15 +11,19 @@
   </div>
 
   <div class="buttonStage">
-    <button
-      type="button"
-      class="mainClickButton"
-      [@squish]="squishState()"
-      (click)="onButtonClick($event)"
-      aria-label="Click to earn coins"
-    >
+    @if (isVip) {
+    <!-- VIP FACE BUTTON -->
+    <button type="button" class="mainClickButton vipFaceButton" [@squish]="squishState()"
+      (click)="onButtonClick($event)" aria-label="Click your face to earn coins">
+      <img src="assets/vip.jpeg" alt="Birthday VIP" />
+    </button>
+    } @else {
+    <!-- NORMAL BUTTON -->
+    <button type="button" class="mainClickButton" [@squish]="squishState()" (click)="onButtonClick($event)"
+      aria-label="Click to earn coins">
       <span class="material-icons" aria-hidden="true">paid</span>
     </button>
+    }
 
     <div class="comboBadge numeric" [class.active]="isComboActive()" aria-live="polite">
       <span>x{{ comboMultiplierDisplay() }}</span>
