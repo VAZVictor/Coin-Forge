@@ -68,12 +68,12 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string, rememberMe: boolean): Promise<AuthResult> {
+    async signUp(email: string, password: string, rememberMe: boolean, referralCode?: string): Promise<AuthResult> {
     try {
       const response = await firstValueFrom(
         this.http.post<AuthUserResponse>(
           `${BACKEND_BASE_URL}/api/auth/signup`,
-          { email, password, rememberMe },
+          { email, password, rememberMe, referralCode },
           { withCredentials: true }
         )
       );
@@ -84,12 +84,12 @@ export class AuthService {
     }
   }
 
-  async logIn(email: string, password: string, rememberMe: boolean): Promise<AuthResult> {
+  async logIn(email: string, password: string, rememberMe: boolean, referralCode?: string): Promise<AuthResult> {
     try {
       const response = await firstValueFrom(
         this.http.post<AuthUserResponse>(
           `${BACKEND_BASE_URL}/api/auth/login`,
-          { email, password, rememberMe },
+          { email, password, rememberMe, referralCode },
           { withCredentials: true }
         )
       );

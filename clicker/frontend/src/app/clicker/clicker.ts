@@ -10,6 +10,7 @@ import {
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { GameStateService } from '../core/services/gameState.service';
 import { NumberFormatService } from '../core/services/numberFormat.service';
+import { AuthService } from '../core/services/auth.service';
 
 const SHAKE_EVERY_N_CLICKS = 10;
 const FLOAT_TEXT_LIFETIME_MS = 800;
@@ -37,6 +38,7 @@ const MAX_PARTICLES = 8;
 export class Clicker {
   protected readonly gameState = inject(GameStateService);
   protected readonly numberFormat = inject(NumberFormatService);
+  protected readonly authService = inject(AuthService);
 
   private readonly hostRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
@@ -60,6 +62,10 @@ export class Clicker {
   });
 
   protected readonly isComboActive = computed(() => this.gameState.comboCount() > 0);
+
+  protected get isVip(): boolean {
+    return this.authService.currentUser()?.isVip === true;
+  }
 
   protected onButtonClick(event: MouseEvent): void {
     const gained = this.gameState.click();

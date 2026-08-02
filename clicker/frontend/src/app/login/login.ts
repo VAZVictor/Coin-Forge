@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // <-- Added ActivatedRoute here
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { ForgotPassword } from './forgot-password/forgot-password';
@@ -18,6 +18,7 @@ export class Login {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly forgotPasswordRequested = output<void>();
 
@@ -26,6 +27,8 @@ export class Login {
   protected readonly isSubmitting = signal(false);
   protected readonly hasShakeError = signal(false);
   protected readonly statusMessage = signal<string | null>(null);
+  
+  protected referralCode: string | null = null;
 
   protected readonly authForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -33,6 +36,16 @@ export class Login {
     confirmPassword: [''],
     rememberMe: [false]
   });
+
+  constructor() {
+    // Capture the QR code from the URL immediately
+    this.route.queryParams.subscribe(params => {
+      if (params['ref']) {
+        this.referralCode = params['ref'];
+        this.statusMessage.set('Special birthday link detected! Log in to claim your VIP status.');
+      }
+    });
+  }
 
   protected togglePasswordVisibility(): void {
     this.isPasswordVisible.update(visible => !visible);
@@ -68,10 +81,11 @@ export class Login {
     this.isSubmitting.set(true);
     this.statusMessage.set(null);
 
+    // Pass the referralCode to the auth service
     const request =
       currentMode === 'signUp'
-        ? this.authService.signUp(email, password, rememberMe)
-        : this.authService.logIn(email, password, rememberMe);
+        ? this.authService.signUp(email, password, rememberMe, this.referralCode ?? undefined)
+        : this.authService.logIn(email, password, rememberMe, this.referralCode ?? undefined);
 
     request.then(result => {
       this.isSubmitting.set(false);
