@@ -1,11 +1,11 @@
 <div class="gameLayout">
   @if (offlineGainDisplay(); as gain) {
-    <div class="offlineBanner" role="status">
-      <span>Welcome back. You earned {{ gain }} coins while away.</span>
-      <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
-        <span class="material-icons" aria-hidden="true">close</span>
-      </button>
-    </div>
+  <div class="offlineBanner" role="status">
+    <span>Welcome back. You earned {{ gain }} coins while away.</span>
+    <button type="button" class="offlineBannerDismiss" (click)="dismissOfflineBanner()" aria-label="Dismiss">
+      <span class="material-icons" aria-hidden="true">close</span>
+    </button>
+  </div>
   }
 
   <header class="gameHeader">
@@ -19,13 +19,14 @@
       </button>
     </div>
   </header>
-
+  <!-- Left side -->
   <main class="gameMain">
     <div class="primaryColumn">
       <app-clicker class="clickerSlot" />
       <app-achievements />
+      
     </div>
-
+    <!-- Right side -->
     <div class="sidePanels">
       <app-upgrade-list />
       <app-rebirth-panel />
@@ -33,6 +34,7 @@
       <app-reincarnation />
       <app-ascension />
       <app-abdication />
+      <app-task />
     </div>
   </main>
 </div>

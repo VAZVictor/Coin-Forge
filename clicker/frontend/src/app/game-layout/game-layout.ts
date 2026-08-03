@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Task } from '../task/task';
 import { Router } from '@angular/router';
 import { Clicker } from '../clicker/clicker';
 import { UpgradeList } from '../upgradeList/upgradeList';
@@ -17,6 +18,7 @@ import { NumberFormatService } from '../core/services/numberFormat.service';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    Task,
     Clicker,
     UpgradeList,
     RebirthPanel,
