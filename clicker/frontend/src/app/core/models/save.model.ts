@@ -20,4 +20,5 @@ export interface GameSavePayload {
   reincarnationCount: number;
   ascensionCount: number;
   abdicationCount: number;
+  taskCompletions?: Record<string, number>;
 }

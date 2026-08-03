@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { UpgradeState } from '../models/upgrade.model';
 import { GameSavePayload } from '../models/save.model';
+import { TASK_DEFINITIONS } from '../models/task.model';
 
 const INITIAL_UPGRADES: UpgradeState[] = [
   {
@@ -77,15 +78,6 @@ const ABDICATION_THRESHOLD = 1e60;
 // cannot be used to skip years of production in one load.
 const MAX_OFFLINE_SECONDS = 24 * 60 * 60;
 
-/**
- * Reward formulas for layers 2 through 5 are not fully pinned down by the
- * design brief (only Rebirth's floor(coins^0.4 / 1000) is specified), so
- * these are original balancing choices calibrated so that reaching each
- * layer's unlock threshold yields a small, non zero reward, and going an
- * order of magnitude beyond it yields a modestly larger one. Each layer's
- * multiplier compounds on the ones below it, so exponents were kept small
- * and shrink at higher layers to avoid runaway values.
- */
 function rewardFromCoins(coins: number, exponent: number, divisor: number): number {
   return Math.floor(Math.pow(coins, exponent) / divisor);
 }
@@ -104,8 +96,6 @@ export class GameStateService {
   readonly divinity = signal<number>(0);
   readonly legacy = signal<number>(0);
 
-  // Lifetime stats. These never reset, even across prestige layers, since
-  // they exist purely to track achievements and total playtime progress.
   readonly totalClicksAllTime = signal<number>(0);
   readonly totalCoinsEarnedAllTime = signal<number>(0);
   readonly totalUpgradesPurchasedAllTime = signal<number>(0);
@@ -115,6 +105,11 @@ export class GameStateService {
   readonly reincarnationCount = signal<number>(0);
   readonly ascensionCount = signal<number>(0);
   readonly abdicationCount = signal<number>(0);
+
+  // Number of times each Task (see task.model.ts) has been completed.
+  // Keyed by task id. Missing/0 means never completed. Persisted like
+  // everything else via serializeState()/loadState().
+  readonly taskCompletions = signal<Record<string, number>>({});
 
   readonly comboCount = signal<number>(0);
   readonly comboProgress = computed(() => this.comboCount() / COMBO_CAP);
@@ -126,9 +121,6 @@ export class GameStateService {
   readonly divinityMultiplier = computed(() => Math.pow(2, this.divinity()));
   readonly legacyMultiplier = computed(() => Math.pow(10, this.legacy()));
 
-  // The combined multiplier from every prestige layer, applied to both
-  // passive production and click power. Order does not affect the total
-  // since every term is a product, but this mirrors the layer order.
   readonly prestigeMultiplier = computed(
     () =>
       this.rebirthMultiplier() *
@@ -138,14 +130,43 @@ export class GameStateService {
       this.legacyMultiplier()
   );
 
-  readonly baseCps = computed(() =>
-    this.upgrades().reduce((sum, upgrade) => sum + upgrade.owned * upgrade.baseCps, 0)
+  private taskUpgradeMultiplier(upgradeId: string): number {
+    const completions = this.taskCompletions();
+    return TASK_DEFINITIONS.filter(
+      task => task.conditionType === 'rebirthWithoutUpgrade' && task.targetUpgradeId === upgradeId
+    ).reduce((multiplier, task) => {
+      const timesCompleted = completions[task.id] ?? 0;
+      return multiplier * (1 + timesCompleted * task.bonusPercent);
+    }, 1);
+  }
+
+  private readonly taskGlobalMultiplier = computed(() => {
+    const completions = this.taskCompletions();
+    return TASK_DEFINITIONS.filter(task => task.conditionType === 'rebirthWithNoUpgrades').reduce(
+      (multiplier, task) => {
+        const timesCompleted = completions[task.id] ?? 0;
+        return multiplier * (1 + timesCompleted * task.bonusPercent);
+      },
+      1
+    );
+  });
+
+  readonly baseCps = computed(
+    () =>
+      this.upgrades().reduce(
+        (sum, upgrade) => sum + upgrade.owned * upgrade.baseCps * this.taskUpgradeMultiplier(upgrade.id),
+        0
+      ) * this.taskGlobalMultiplier()
   );
 
   readonly cps = computed(() => this.baseCps() * this.prestigeMultiplier());
 
   readonly clickPower = computed(
-    () => this.clickPowerBase() * this.prestigeMultiplier() * this.comboMultiplier()
+    () =>
+      this.clickPowerBase() *
+      this.prestigeMultiplier() *
+      this.comboMultiplier() *
+      this.taskGlobalMultiplier()
   );
 
   readonly isRebirthUnlocked = computed(() => this.coins() >= REBIRTH_THRESHOLD);
@@ -156,41 +177,31 @@ export class GameStateService {
 
   readonly projectedRebirthTokens = computed(() => {
     const coinValue = this.coins();
-    if (coinValue < REBIRTH_THRESHOLD) {
-      return 0;
-    }
+    if (coinValue < REBIRTH_THRESHOLD) return 0;
     return rewardFromCoins(coinValue, 0.4, 1000);
   });
 
   readonly projectedWorldShards = computed(() => {
     const coinValue = this.coins();
-    if (coinValue < PRESTIGE_THRESHOLD) {
-      return 0;
-    }
+    if (coinValue < PRESTIGE_THRESHOLD) return 0;
     return rewardFromCoins(coinValue, 0.14, 50);
   });
 
   readonly projectedSouls = computed(() => {
     const coinValue = this.coins();
-    if (coinValue < REINCARNATION_THRESHOLD) {
-      return 0;
-    }
+    if (coinValue < REINCARNATION_THRESHOLD) return 0;
     return rewardFromCoins(coinValue, 0.1, 20);
   });
 
   readonly projectedDivinity = computed(() => {
     const coinValue = this.coins();
-    if (coinValue < ASCENSION_THRESHOLD) {
-      return 0;
-    }
+    if (coinValue < ASCENSION_THRESHOLD) return 0;
     return rewardFromCoins(coinValue, 0.03, 5);
   });
 
   readonly projectedLegacy = computed(() => {
     const coinValue = this.coins();
-    if (coinValue < ABDICATION_THRESHOLD) {
-      return 0;
-    }
+    if (coinValue < ABDICATION_THRESHOLD) return 0;
     return rewardFromCoins(coinValue, 0.02, 5);
   });
 
@@ -201,13 +212,12 @@ export class GameStateService {
     this.startGameLoop();
   }
 
-    private startGameLoop(): void {
+  private startGameLoop(): void {
     this.loopHandle = setInterval(() => {
       const gain = this.cps() / 10;
       if (gain > 0) {
         this.addCoins(gain);
       }
-      // Track active playtime: add 0.1 seconds (100ms) per loop iteration
       this.totalPlaytimeSeconds.update(current => current + (LOOP_INTERVAL_MS / 1000));
     }, LOOP_INTERVAL_MS);
   }
@@ -259,14 +269,10 @@ export class GameStateService {
 
   buyUpgrade(id: string): void {
     const target = this.upgrades().find(upgrade => upgrade.id === id);
-    if (!target) {
-      return;
-    }
+    if (!target) return;
 
     const cost = this.getUpgradeCost(target);
-    if (this.coins() < cost) {
-      return;
-    }
+    if (this.coins() < cost) return;
 
     this.coins.update(current => current - cost);
     this.upgrades.update(list =>
@@ -283,9 +289,11 @@ export class GameStateService {
   }
 
   performRebirth(): void {
-    if (!this.isRebirthUnlocked()) {
-      return;
-    }
+    if (!this.isRebirthUnlocked()) return;
+
+    // Must run before resetBaseProgress() wipes upgrade counts back to 0,
+    // since these checks depend on what was (or wasn't) bought this run.
+    this.evaluateRebirthTasks();
 
     const tokensGained = this.projectedRebirthTokens();
 
@@ -294,13 +302,35 @@ export class GameStateService {
     this.rebirthCount.update(count => count + 1);
   }
 
-  performPrestige(): void {
-    if (!this.isPrestigeUnlocked()) {
-      return;
+  // TASKS
+  private evaluateRebirthTasks(): void {
+    const upgrades = this.upgrades();
+    const noUpgradesBoughtThisRun = upgrades.every(upgrade => upgrade.owned === 0);
+
+    for (const task of TASK_DEFINITIONS) {
+      if (task.conditionType === 'rebirthWithoutUpgrade') {
+        const target = upgrades.find(upgrade => upgrade.id === task.targetUpgradeId);
+        if (target && target.owned === 0) {
+          this.recordTaskCompletion(task.id);
+        }
+      } else if (task.conditionType === 'rebirthWithNoUpgrades') {
+        if (noUpgradesBoughtThisRun) {
+          this.recordTaskCompletion(task.id);
+        }
+      }
     }
+  }
 
+  private recordTaskCompletion(taskId: string): void {
+    this.taskCompletions.update(current => ({
+      ...current,
+      [taskId]: (current[taskId] ?? 0) + 1
+    }));
+  }
+
+  performPrestige(): void {
+    if (!this.isPrestigeUnlocked()) return;
     const shardsGained = this.projectedWorldShards();
-
     this.worldShards.update(current => current + shardsGained);
     this.rebirthTokens.set(0);
     this.resetBaseProgress();
@@ -308,12 +338,8 @@ export class GameStateService {
   }
 
   performReincarnation(): void {
-    if (!this.isReincarnationUnlocked()) {
-      return;
-    }
-
+    if (!this.isReincarnationUnlocked()) return;
     const soulsGained = this.projectedSouls();
-
     this.souls.update(current => current + soulsGained);
     this.worldShards.set(0);
     this.rebirthTokens.set(0);
@@ -322,12 +348,8 @@ export class GameStateService {
   }
 
   performAscension(): void {
-    if (!this.isAscensionUnlocked()) {
-      return;
-    }
-
+    if (!this.isAscensionUnlocked()) return;
     const divinityGained = this.projectedDivinity();
-
     this.divinity.update(current => current + divinityGained);
     this.souls.set(0);
     this.worldShards.set(0);
@@ -337,14 +359,8 @@ export class GameStateService {
   }
 
   performAbdication(): void {
-    if (!this.isAbdicationUnlocked()) {
-      return;
-    }
-
+    if (!this.isAbdicationUnlocked()) return;
     const legacyGained = this.projectedLegacy();
-
-    // Legacy is the one currency that is never reset, by anything,
-    // including a future abdication. It only ever accumulates.
     this.legacy.update(current => current + legacyGained);
     this.divinity.set(0);
     this.souls.set(0);
@@ -354,7 +370,6 @@ export class GameStateService {
     this.abdicationCount.update(count => count + 1);
   }
 
-  /** Applies passive production earned while the tab or app was closed. */
   applyOfflineProgress(elapsedSeconds: number): number {
     const cappedSeconds = Math.max(0, Math.min(elapsedSeconds, MAX_OFFLINE_SECONDS));
     const gained = this.cps() * cappedSeconds;
@@ -364,7 +379,7 @@ export class GameStateService {
     return gained;
   }
 
-    serializeState(): GameSavePayload {
+  serializeState(): GameSavePayload {
     return {
       coins: this.coins(),
       upgrades: this.upgrades().map(upgrade => ({ id: upgrade.id, owned: upgrade.owned })),
@@ -381,11 +396,12 @@ export class GameStateService {
       prestigeCount: this.prestigeCount(),
       reincarnationCount: this.reincarnationCount(),
       ascensionCount: this.ascensionCount(),
-      abdicationCount: this.abdicationCount()
+      abdicationCount: this.abdicationCount(),
+      taskCompletions: this.taskCompletions()
     };
   }
 
-    loadState(payload: GameSavePayload): void {
+  loadState(payload: GameSavePayload): void {
     this.coins.set(payload.coins);
     this.upgrades.update(list =>
       list.map(upgrade => {
@@ -407,5 +423,6 @@ export class GameStateService {
     this.reincarnationCount.set(payload.reincarnationCount);
     this.ascensionCount.set(payload.ascensionCount);
     this.abdicationCount.set(payload.abdicationCount);
+    this.taskCompletions.set(payload.taskCompletions ?? {});
   }
 }
