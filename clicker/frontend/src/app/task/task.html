@@ -1,0 +1,26 @@
+<section class="tasksPanel" aria-label="Tasks">
+    <div class="tasksHeader">
+        <h2 class="panelTitle">Tasks</h2>
+        <span class="tasksCount">{{ tasksService.completedCount() }} / {{ tasksService.totalCount }}</span>
+    </div>
+
+    <ul class="tasksList">
+        @for (task of tasksService.tasks(); track task.id) {
+        <li class="taskTile" [class.completed]="task.timesCompleted > 0">
+            <span class="material-icons taskIcon" aria-hidden="true">{{ task.icon }}</span>
+            <div class="taskBody">
+                <div class="taskNameRow">
+                    <span class="taskName">{{ task.name }}</span>
+                    @if (task.timesCompleted > 0) {
+                    <span class="taskBadge">+{{ task.currentBonusPercent | number: '1.0-1' }}%</span>
+                    }
+                </div>
+                <span class="taskDescription">{{ task.description }}</span>
+                @if (task.timesCompleted > 0) {
+                <span class="taskMeta">Completed {{ task.timesCompleted }}x</span>
+                }
+            </div>
+        </li>
+        }
+    </ul>
+</section>
