@@ -1,0 +1,106 @@
+.gameLayout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 40px 16px 64px;
+}
+
+.offlineBanner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 20px;
+    background: #e8f4ff;
+    border: 1px solid #bcdffc;
+    color: #1f2937;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.offlineBannerDismiss {
+    display: flex;
+    align-items: center;
+    color: #475569;
+}
+
+.gameHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    max-width: 880px;
+}
+
+.gameTitle {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.gameTitle .dot {
+    color: #8b5cf6;
+}
+
+.accountBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.accountEmail {
+    font-size: 0.82rem;
+    color: #64748b;
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 9999px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: border-color 140ms ease, color 140ms ease;
+}
+
+.logoutButton:hover {
+    border-color: #8b5cf6;
+    color: #8b5cf6;
+}
+
+.gameMain {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    max-width: 880px;
+}
+
+.primaryColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 380px;
+}
+
+.sidePanels {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (max-width: 720px) {
+    .gameMain {
+        flex-direction: column;
+        align-items: center;
+    }
+}

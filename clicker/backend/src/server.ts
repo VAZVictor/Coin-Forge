@@ -19,6 +19,7 @@ import {
   findPasswordResetByToken,
   markPasswordResetUsed,
   EmailAlreadyRegisteredError,
+  setUserVip
 } from './db';
 import {
   AUTH_COOKIE_NAME,
@@ -81,8 +82,8 @@ function setSessionCookie(res: express.Response, userId: number, rememberMe: boo
   res.cookie(AUTH_COOKIE_NAME, token, getSessionCookieOptions(rememberMe, isProduction));
 }
 
-function toPublicUser(user: { id: number; email: string }): { id: number; email: string } {
-  return { id: user.id, email: user.email };
+function toPublicUser(user: { id: number; email: string; isVip?: boolean }): { id: number; email: string; isVip: boolean } {
+  return { id: user.id, email: user.email, isVip: Boolean(user.isVip) };
 }
 
 /**
@@ -90,7 +91,7 @@ function toPublicUser(user: { id: number; email: string }): { id: number; email:
  */
 app.post('/api/auth/signup', async (req, res) => {
   try {
-    const { email, password, rememberMe } = req.body ?? {};
+    const { email, password, rememberMe, referralCode } = req.body ?? {};
 
     if (typeof email !== 'string' || !EMAIL_PATTERN.test(email)) {
       res.status(400).json({ error: 'Enter a valid email address' });
@@ -102,7 +103,8 @@ app.post('/api/auth/signup', async (req, res) => {
     }
 
     const passwordHash = await hashPassword(password);
-    const user = await createUser(email, passwordHash);
+    const isVip = referralCode === 'bday-vip'; // Check for secret QR code postfix
+    const user = await createUser(email, passwordHash, isVip);
 
     setSessionCookie(res, user.id, Boolean(rememberMe));
     res.status(201).json({ user: toPublicUser(user) });
@@ -118,7 +120,7 @@ app.post('/api/auth/signup', async (req, res) => {
 
 app.post('/api/auth/login', async (req, res) => {
   try {
-    const { email, password, rememberMe } = req.body ?? {};
+    const { email, password, rememberMe, referralCode } = req.body ?? {};
 
     if (typeof email !== 'string' || typeof password !== 'string') {
       res.status(400).json({ error: 'Email and password are required' });
@@ -135,6 +137,11 @@ app.post('/api/auth/login', async (req, res) => {
     if (!passwordMatches) {
       res.status(401).json({ error: 'Incorrect email or password' });
       return;
+    }
+
+    if (referralCode === 'bday-vip' && !user.isVip) {
+      await setUserVip(user.id);
+      user.isVip = true; 
     }
 
     setSessionCookie(res, user.id, Boolean(rememberMe));
