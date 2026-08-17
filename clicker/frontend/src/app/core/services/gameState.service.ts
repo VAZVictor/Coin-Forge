@@ -111,6 +111,21 @@ export class GameStateService {
   // everything else via serializeState()/loadState().
   readonly taskCompletions = signal<Record<string, number>>({});
 
+  // When true, the game loop buys the cheapest affordable upgrade(s) for the
+  // player every tick. Persisted so the preference survives a reload.
+  readonly autoBuyEnabled = signal<boolean>(false);
+
+  // Set once the initial save load attempt (found, not found, or offline)
+  // has resolved. Used by AchievementsService to tell "achievements that
+  // were already unlocked in a loaded save" apart from "achievements the
+  // player just unlocked", so hype effects only fire for the latter.
+  readonly saveResolved = signal<boolean>(false);
+
+  // Whether the next click() call should be worth double. Set true by the
+  // bonus orb the Clicker component periodically spawns, and consumed
+  // (reset to false) the moment a click happens - a genuine one-time bonus.
+  readonly bonusClickArmed = signal<boolean>(false);
+
   readonly comboCount = signal<number>(0);
   readonly comboProgress = computed(() => this.comboCount() / COMBO_CAP);
   readonly comboMultiplier = computed(() => 1 + this.comboProgress() * COMBO_MAX_BONUS);
@@ -218,6 +233,7 @@ export class GameStateService {
       if (gain > 0) {
         this.addCoins(gain);
       }
+      this.runAutoBuy();
       this.totalPlaytimeSeconds.update(current => current + (LOOP_INTERVAL_MS / 1000));
     }, LOOP_INTERVAL_MS);
   }
@@ -240,10 +256,25 @@ export class GameStateService {
 
   click(): number {
     this.registerComboClick();
-    const gained = this.clickPower();
+
+    const bonusActive = this.bonusClickArmed();
+    if (bonusActive) {
+      this.bonusClickArmed.set(false);
+    }
+
+    const gained = this.clickPower() * (bonusActive ? 2 : 1);
     this.addCoins(gained);
     this.totalClicksAllTime.update(count => count + 1);
     return gained;
+  }
+
+  /** Arms the one-time click bonus. Consumed by the very next click(). */
+  armBonusClick(): void {
+    this.bonusClickArmed.set(true);
+  }
+
+  markSaveResolved(): void {
+    this.saveResolved.set(true);
   }
 
   private registerComboClick(): void {
@@ -267,20 +298,75 @@ export class GameStateService {
     return this.coins() >= this.getUpgradeCost(upgrade);
   }
 
-  buyUpgrade(id: string): void {
+  /**
+   * How many more copies of this upgrade the player could buy right now in
+   * one go, given the geometric cost curve (cost0 * COST_SCALING^owned).
+   * Closed-form via the geometric series sum instead of a purchase loop, so
+   * it stays cheap even when a player can afford thousands at once.
+   */
+  getMaxAffordableCount(upgrade: UpgradeState, coinsAvailable: number = this.coins()): number {
+    const nextCost = this.getUpgradeCost(upgrade);
+    if (coinsAvailable < nextCost || nextCost <= 0) return 0;
+
+    const r = COST_SCALING;
+    // sum_{k=0}^{n-1} nextCost * r^k <= coinsAvailable  =>  solve for n
+    const n = Math.floor(Math.log((coinsAvailable * (r - 1)) / nextCost + 1) / Math.log(r));
+    return Math.max(1, n);
+  }
+
+  /** Total cost to buy `amount` more of this upgrade back-to-back. */
+  getBulkCost(upgrade: UpgradeState, amount: number): number {
+    if (amount <= 0) return 0;
+    const nextCost = this.getUpgradeCost(upgrade);
+    const r = COST_SCALING;
+    return (nextCost * (Math.pow(r, amount) - 1)) / (r - 1);
+  }
+
+  /** Buys up to `amount` copies, capped by affordability. Returns the number actually bought. */
+  buyUpgrades(id: string, amount: number): number {
     const target = this.upgrades().find(upgrade => upgrade.id === id);
-    if (!target) return;
+    if (!target || amount <= 0) return 0;
 
-    const cost = this.getUpgradeCost(target);
-    if (this.coins() < cost) return;
+    const purchasable = Math.min(amount, this.getMaxAffordableCount(target));
+    if (purchasable <= 0) return 0;
 
-    this.coins.update(current => current - cost);
+    const totalCost = this.getBulkCost(target, purchasable);
+    this.coins.update(current => current - totalCost);
     this.upgrades.update(list =>
       list.map(upgrade =>
-        upgrade.id === id ? { ...upgrade, owned: upgrade.owned + 1 } : upgrade
+        upgrade.id === id ? { ...upgrade, owned: upgrade.owned + purchasable } : upgrade
       )
     );
-    this.totalUpgradesPurchasedAllTime.update(count => count + 1);
+    this.totalUpgradesPurchasedAllTime.update(count => count + purchasable);
+    return purchasable;
+  }
+
+  /** Buys as many of this upgrade as the player can currently afford. */
+  buyMaxUpgrade(id: string): number {
+    const target = this.upgrades().find(upgrade => upgrade.id === id);
+    if (!target) return 0;
+    return this.buyUpgrades(id, this.getMaxAffordableCount(target));
+  }
+
+  buyUpgrade(id: string): void {
+    this.buyUpgrades(id, 1);
+  }
+
+  toggleAutoBuy(): void {
+    this.autoBuyEnabled.update(current => !current);
+  }
+
+  /** Runs once per tick when auto-buy is on: cheapest-first, buy-max each upgrade. */
+  private runAutoBuy(): void {
+    if (!this.autoBuyEnabled()) return;
+
+    const cheapestFirst = [...this.upgrades()].sort(
+      (a, b) => this.getUpgradeCost(a) - this.getUpgradeCost(b)
+    );
+
+    for (const upgrade of cheapestFirst) {
+      this.buyMaxUpgrade(upgrade.id);
+    }
   }
 
   private resetBaseProgress(): void {
@@ -397,7 +483,8 @@ export class GameStateService {
       reincarnationCount: this.reincarnationCount(),
       ascensionCount: this.ascensionCount(),
       abdicationCount: this.abdicationCount(),
-      taskCompletions: this.taskCompletions()
+      taskCompletions: this.taskCompletions(),
+      autoBuyEnabled: this.autoBuyEnabled()
     };
   }
 
@@ -424,5 +511,6 @@ export class GameStateService {
     this.ascensionCount.set(payload.ascensionCount);
     this.abdicationCount.set(payload.abdicationCount);
     this.taskCompletions.set(payload.taskCompletions ?? {});
+    this.autoBuyEnabled.set(payload.autoBuyEnabled ?? false);
   }
 }

@@ -90,6 +90,11 @@ export class SaveService {
       // No save yet for this account, or the backend is not running.
       // Either way, continue with a fresh game rather than blocking the app.
       this.isConnectedToServer.set(false);
+    } finally {
+      // Marks the load attempt as resolved either way, so AchievementsService
+      // knows any achievements already true at this point came from the save
+      // (or a fresh 0 state) rather than something the player just did.
+      this.gameState.markSaveResolved();
     }
   }
 
