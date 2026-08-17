@@ -227,6 +227,18 @@
   text-decoration: underline;
 }
 
+.privacyLink {
+  font-size: 0.75rem;
+  color: var(--color-ink-soft, #6b7280);
+  text-decoration: none;
+}
+
+.privacyLink:hover,
+.privacyLink:focus-visible {
+  color: var(--color-sky, #4f9fdb);
+  text-decoration: underline;
+}
+
 @keyframes mascotBob {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-6px) rotate(8deg); }
