@@ -26,14 +26,15 @@ A clicker is only as good as its feedback. The UI is heavily optimized for tacti
 - **Particle Systems:** Clicking triggers bursts of particles that explode outward from the button.
 - **Screen Shake:** Subtle container translation on milestone clicks to emphasize impact.
 - **Dark Mode Aesthetics:** Rich gradients, glowing accents, and modern typography.
+- **Achievement Toasts:** Header Like Toasts appear whenever reaching a new step in the Achievements category.
 
 ### Massive Mathematics
-- Custom number formatting engine that seamlessly transitions from standard integers to K, M, B, T, and eventually scientific notation (e.g., 1.23e34) as numbers scale into the trillions.
+- The engine automatically formats large numbers by transitioning from standard integers to metric suffixes (K, M, B, T) and switching to scientific notation (e.g., 1.23e34) when values exceed the trillion range.
 - Exponential cost scaling for all upgrades to ensure long-term progression balance.
 
 ### Quality of Life
 - **Auto-Save:** Game state is continuously serialized to a SQLite database.
-- **Auto-/Multi Buy:** Many Upgrades can be bought at once and be automated. 
+- **Auto-/Multi Buy:** Many Upgrades can be bought at once and be fully automated. 
 - **Achievements:** Milestone tracking across clicking, upgrading, prestige layers and time spent in the game.
 
 ---
