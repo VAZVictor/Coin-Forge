@@ -1,5 +1,30 @@
 <aside class="upgradePanel" aria-label="Upgrades">
-  <h2 class="panelTitle">Upgrades</h2>
+  <div class="upgradeHeader">
+    <h2 class="panelTitle">Upgrades</h2>
+
+    <div class="upgradeControls">
+      <button
+        type="button"
+        class="buyAmountButton"
+        (click)="cycleBuyAmount()"
+        aria-label="Change purchase quantity, currently {{ buyAmountLabel() }}"
+      >
+        {{ buyAmountLabel() }}
+      </button>
+
+      <button
+        type="button"
+        class="autoBuyToggle"
+        [class.active]="autoBuyEnabled()"
+        [attr.aria-pressed]="autoBuyEnabled()"
+        (click)="onToggleAutoBuy()"
+        aria-label="Auto-buy upgrades, currently {{ autoBuyEnabled() ? 'on' : 'off' }}"
+      >
+        <span class="material-icons" aria-hidden="true">{{ autoBuyEnabled() ? 'toggle_on' : 'toggle_off' }}</span>
+        Auto-Buy
+      </button>
+    </div>
+  </div>
 
   <ul class="upgradeListItems">
     @for (upgrade of gameState.upgrades(); track upgrade.id) {
@@ -15,8 +40,13 @@
           <span class="upgradeDescription">{{ upgrade.description }}</span>
         </span>
 
-        <span class="upgradeCost">
-          {{ getCost(upgrade.id) | gameNumber }}
+        <span class="upgradeBuyMeta">
+          <span class="upgradeCost">
+            {{ getCost(upgrade.id) | gameNumber }}
+          </span>
+          @if (getAmountToBuy(upgrade.id) > 1) {
+            <span class="upgradeBuyAmount">buy {{ getAmountToBuy(upgrade.id) }}</span>
+          }
         </span>
       </button>
     </li>
