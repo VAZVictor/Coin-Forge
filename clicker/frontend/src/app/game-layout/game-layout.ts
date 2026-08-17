@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Task } from '../task/task';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Clicker } from '../clicker/clicker';
 import { UpgradeList } from '../upgradeList/upgradeList';
 import { RebirthPanel } from '../rebirthPanel/rebirthPanel';
@@ -9,6 +9,7 @@ import { Reincarnation } from '../reincarnation/reincarnation';
 import { Ascension } from '../ascension/ascension';
 import { Abdication } from '../abdication/abdication';
 import { Achievements } from '../achievements/achievements';
+import { AchievementToast } from '../achievement-toast/achievement-toast';
 import { SaveService } from '../core/services/save.service';
 import { AuthService } from '../core/services/auth.service';
 import { NumberFormatService } from '../core/services/numberFormat.service';
@@ -26,7 +27,9 @@ import { NumberFormatService } from '../core/services/numberFormat.service';
     Reincarnation,
     Ascension,
     Abdication,
-    Achievements
+    Achievements,
+    AchievementToast,
+    RouterLink
   ],
   templateUrl: './game-layout.html',
   styleUrls: ['./game-layout.css']

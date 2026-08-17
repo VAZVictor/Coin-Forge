@@ -1,4 +1,6 @@
 <div class="gameLayout">
+  <app-achievement-toast />
+
   @if (offlineGainDisplay(); as gain) {
   <div class="offlineBanner" role="status">
     <span>Welcome back. You earned {{ gain }} coins while away.</span>
@@ -37,4 +39,8 @@
       <app-task />
     </div>
   </main>
+
+  <footer class="gameFooter">
+    <a routerLink="/privacy" class="footerPrivacyLink">Privacy Policy</a>
+  </footer>
 </div>
