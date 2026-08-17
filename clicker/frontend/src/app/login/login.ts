@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; // <-- Added ActivatedRoute here
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { ForgotPassword } from './forgot-password/forgot-password';
@@ -10,7 +10,7 @@ type AuthMode = 'signIn' | 'signUp';
   selector: 'app-login',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, ForgotPassword],
+  imports: [ReactiveFormsModule, ForgotPassword, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })

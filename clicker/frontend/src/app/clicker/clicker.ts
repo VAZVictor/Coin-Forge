@@ -1,12 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
+  PLATFORM_ID,
   Renderer2,
   computed,
   inject,
   signal
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { GameStateService } from '../core/services/gameState.service';
 import { NumberFormatService } from '../core/services/numberFormat.service';
@@ -17,6 +20,14 @@ const FLOAT_TEXT_LIFETIME_MS = 800;
 const PARTICLE_LIFETIME_MS = 600;
 const MIN_PARTICLES = 6;
 const MAX_PARTICLES = 8;
+
+// Bonus orb: a small "double your next click" button that appears inside
+// the main button every so often, stays up briefly, then vanishes again.
+const BONUS_ORB_VISIBLE_MS = 4500;
+const BONUS_ORB_MIN_DELAY_MS = 7000;
+const BONUS_ORB_MAX_DELAY_MS = 15000;
+const BONUS_ORB_MIN_RADIUS_PX = 18;
+const BONUS_ORB_MAX_RADIUS_PX = 56;
 
 @Component({
   selector: 'app-clicker',
@@ -42,10 +53,18 @@ export class Clicker {
 
   private readonly hostRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   protected readonly squishState = signal<'idle' | 'pressed'>('idle');
   protected readonly isShaking = signal<boolean>(false);
   protected readonly clickCount = signal<number>(0);
+
+  protected readonly bonusOrbVisible = signal<boolean>(false);
+  protected readonly bonusOrbOffset = signal<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  private bonusOrbSpawnHandle: ReturnType<typeof setTimeout> | null = null;
+  private bonusOrbHideHandle: ReturnType<typeof setTimeout> | null = null;
 
   protected readonly coinsDisplay = computed(() => this.numberFormat.format(this.gameState.coins()));
   protected readonly cpsDisplay = computed(() => this.numberFormat.format(this.gameState.cps()));
@@ -65,6 +84,53 @@ export class Clicker {
 
   protected get isVip(): boolean {
     return this.authService.currentUser()?.isVip === true;
+  }
+
+  constructor() {
+    if (this.isBrowser) {
+      this.scheduleNextBonusOrb();
+    }
+
+    this.destroyRef.onDestroy(() => {
+      if (this.bonusOrbSpawnHandle !== null) clearTimeout(this.bonusOrbSpawnHandle);
+      if (this.bonusOrbHideHandle !== null) clearTimeout(this.bonusOrbHideHandle);
+    });
+  }
+
+  private scheduleNextBonusOrb(): void {
+    const delay =
+      BONUS_ORB_MIN_DELAY_MS + Math.random() * (BONUS_ORB_MAX_DELAY_MS - BONUS_ORB_MIN_DELAY_MS);
+    this.bonusOrbSpawnHandle = setTimeout(() => this.spawnBonusOrb(), delay);
+  }
+
+  private spawnBonusOrb(): void {
+    const angle = Math.random() * Math.PI * 2;
+    const radius =
+      BONUS_ORB_MIN_RADIUS_PX + Math.random() * (BONUS_ORB_MAX_RADIUS_PX - BONUS_ORB_MIN_RADIUS_PX);
+
+    this.bonusOrbOffset.set({
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius
+    });
+    this.bonusOrbVisible.set(true);
+
+    this.bonusOrbHideHandle = setTimeout(() => {
+      this.bonusOrbVisible.set(false);
+      this.scheduleNextBonusOrb();
+    }, BONUS_ORB_VISIBLE_MS);
+  }
+
+  protected onBonusOrbClick(event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (this.bonusOrbHideHandle !== null) {
+      clearTimeout(this.bonusOrbHideHandle);
+      this.bonusOrbHideHandle = null;
+    }
+
+    this.bonusOrbVisible.set(false);
+    this.gameState.armBonusClick();
+    this.scheduleNextBonusOrb();
   }
 
   protected onButtonClick(event: MouseEvent): void {

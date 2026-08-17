@@ -10,13 +10,75 @@
   width: 320px;
 }
 
+.upgradeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .panelTitle {
-  margin: 0 0 2px;
+  margin: 0;
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-ink-soft);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.upgradeControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buyAmountButton {
+  min-width: 44px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.buyAmountButton:hover {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+}
+
+.autoBuyToggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+  padding: 4px 10px 4px 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-ink-soft);
+  font-weight: 600;
+  font-size: 0.78rem;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.autoBuyToggle .material-icons {
+  font-size: 20px;
+}
+
+.autoBuyToggle:hover {
+  border-color: var(--color-sky);
+}
+
+.autoBuyToggle.active {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+  color: var(--color-sky);
 }
 
 .upgradeListItems {
@@ -81,10 +143,23 @@
   color: var(--color-ink-soft);
 }
 
+.upgradeBuyMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
 .upgradeCost {
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--color-coin);
-  flex-shrink: 0;
   font-variant-numeric: tabular-nums;
+}
+
+.upgradeBuyAmount {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
 }

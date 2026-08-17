@@ -1,6 +1,6 @@
 <div class="clickerContainer" [class.shake]="isShaking()">
   <div class="statsPanel">
-    <div class="coinCount numeric" aria-live="polite">
+    <div class="coinCount numeric">
       <span class="coinValue">{{ coinsDisplay() }}</span>
       <span class="coinLabel">coins</span>
     </div>
@@ -11,21 +11,36 @@
   </div>
 
   <div class="buttonStage">
-    @if (isVip) {
-    <!-- VIP FACE BUTTON -->
-    <button type="button" class="mainClickButton vipFaceButton" [@squish]="squishState()"
-      (click)="onButtonClick($event)" aria-label="Click your face to earn coins">
-      <img src="assets/vip.jpeg" alt="Birthday VIP" />
-    </button>
-    } @else {
-    <!-- NORMAL BUTTON -->
-    <button type="button" class="mainClickButton" [@squish]="squishState()" (click)="onButtonClick($event)"
-      aria-label="Click to earn coins">
-      <span class="material-icons" aria-hidden="true">paid</span>
-    </button>
-    }
+    <div class="clickButtonWrap">
+      @if (isVip) {
+      <!-- VIP FACE BUTTON -->
+      <button type="button" class="mainClickButton vipFaceButton" [@squish]="squishState()"
+        (click)="onButtonClick($event)" aria-label="Click your face to earn coins">
+        <img src="assets/vip.jpeg" alt="Birthday VIP" />
+      </button>
+      } @else {
+      <!-- NORMAL BUTTON -->
+      <button type="button" class="mainClickButton" [@squish]="squishState()" (click)="onButtonClick($event)"
+        aria-label="Click to earn coins">
+        <span class="material-icons" aria-hidden="true">paid</span>
+      </button>
+      }
 
-    <div class="comboBadge numeric" [class.active]="isComboActive()" aria-live="polite">
+      @if (bonusOrbVisible()) {
+        <button
+          type="button"
+          class="bonusOrb"
+          [style.--ox.px]="bonusOrbOffset().x"
+          [style.--oy.px]="bonusOrbOffset().y"
+          (click)="onBonusOrbClick($event)"
+          aria-label="Bonus! Click for a one-time double click"
+        >
+          <span class="material-icons" aria-hidden="true">bolt</span>
+        </button>
+      }
+    </div>
+
+    <div class="comboBadge numeric" [class.active]="isComboActive()">
       <span>x{{ comboMultiplierDisplay() }}</span>
       <div class="comboTrack">
         <div class="comboFill" [style.width.%]="comboProgress() * 100"></div>

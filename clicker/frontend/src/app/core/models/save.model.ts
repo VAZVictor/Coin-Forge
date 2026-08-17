@@ -21,4 +21,5 @@ export interface GameSavePayload {
   ascensionCount: number;
   abdicationCount: number;
   taskCompletions?: Record<string, number>;
+  autoBuyEnabled?: boolean;
 }
