@@ -51,11 +51,9 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: var(--color-surface-muted);
-  opacity: 0.55;
 }
 
 .achievementTile.unlocked {
-  opacity: 1;
   border-color: var(--color-sky);
   background: var(--color-sky-soft);
 }

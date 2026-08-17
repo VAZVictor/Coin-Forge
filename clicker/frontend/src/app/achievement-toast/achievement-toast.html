@@ -1,0 +1,47 @@
+@if (current(); as achievement) {
+  <div class="toastLayer" [class.goldLayer]="isGold()">
+    @if (isGold()) {
+      <div class="screenFlash" aria-hidden="true"></div>
+      <div class="confettiField" aria-hidden="true">
+        @for (piece of confetti(); track piece.id) {
+          <span
+            class="confettiPiece"
+            [class.confettiSky]="piece.colorClass === 'confettiSky'"
+            [class.confettiBloom]="piece.colorClass === 'confettiBloom'"
+            [class.confettiCoin]="piece.colorClass === 'confettiCoin'"
+            [style.left.%]="piece.left"
+            [style.animation-delay.ms]="piece.delay"
+            [style.animation-duration.ms]="piece.duration"
+            [style.--drift.px]="piece.drift"
+          ></span>
+        }
+      </div>
+    }
+
+    <button
+      type="button"
+      class="achievementCard"
+      [class.tierBronze]="achievement.tier === 'bronze'"
+      [class.tierSilver]="achievement.tier === 'silver'"
+      [class.tierGold]="achievement.tier === 'gold'"
+      [attr.aria-label]="'Dismiss achievement notification: ' + achievement.name"
+      (click)="dismissNow()"
+    >
+      <span class="material-icons cardIcon" aria-hidden="true">{{ achievement.icon }}</span>
+      <span class="cardText" aria-hidden="true">
+        <span class="cardEyebrow">{{ isGold() ? 'Legendary Unlock!' : 'Achievement Unlocked' }}</span>
+        <span class="cardName">{{ achievement.name }}</span>
+        <span class="cardDescription">{{ achievement.description }}</span>
+      </span>
+      <span class="material-icons cardDismiss" aria-hidden="true">close</span>
+    </button>
+  </div>
+}
+
+<!-- Screen-reader announcement, kept separate from the visual card so it
+     reads cleanly even for players with reduced-motion / no confetti. -->
+<div class="srAnnouncer" role="status" aria-live="polite">
+  @if (current(); as achievement) {
+    Achievement unlocked: {{ achievement.name }}. {{ achievement.description }}
+  }
+</div>
