@@ -1,0 +1,31 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.legalLinks {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legalLink {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-ink-soft, #6b7280);
+    text-decoration: none;
+}
+
+.legalLink:hover,
+.legalLink:focus-visible {
+    color: var(--color-sky, #4f9fdb);
+    text-decoration: underline;
+}
+
+.legalDivider {
+    color: var(--color-border, #e1e6ef);
+    font-size: 0.78rem;
+}
