@@ -1,0 +1,10 @@
+@if (visible()) {
+<div class="cookieBanner" role="region" aria-label="Cookie notice">
+    <p class="cookieText">
+        Coin Forge uses one strictly-necessary cookie to keep you signed in. It's not used for
+        tracking or advertising.
+        <a routerLink="/privacy" class="cookieLink">Learn more</a>
+    </p>
+    <button type="button" class="cookieDismiss" (click)="dismiss()">Got it</button>
+</div>
+}
