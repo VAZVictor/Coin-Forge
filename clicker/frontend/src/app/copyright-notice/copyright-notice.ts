@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-copyright-notice',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './copyright-notice.html',
-  styleUrl: './copyright-notice.css'
+  styleUrl: './copyright-notice.scss'
 })
 export class CopyrightNotice {
   /** Shows just the © line when true; adds the disclaimer line when false. */

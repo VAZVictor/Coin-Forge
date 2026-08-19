@@ -9,7 +9,7 @@ type ForgotPasswordStep = 'requestReset' | 'completeReset' | 'done';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule],
   templateUrl: './forgot-password.html',
-  styleUrl: './forgot-password.css'
+  styleUrl: './forgot-password.scss'
 })
 export class ForgotPassword {
   private readonly formBuilder = inject(FormBuilder);

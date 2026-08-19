@@ -6,7 +6,7 @@ import { TasksService } from '../core/services/task.service';
   selector: 'app-task',
   imports: [DecimalPipe],
   templateUrl: './task.html',
-  styleUrl: './task.css',
+  styleUrl: './task.scss',
 })
 export class Task {
   protected readonly tasksService = inject(TasksService);

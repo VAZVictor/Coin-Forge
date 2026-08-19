@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
   selector: 'app-privacy-policy',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './privacy-policy.html',
-  styleUrl: './privacy-policy.css'
+  styleUrl: './privacy-policy.scss'
 })
 export class PrivacyPolicy {
   private readonly location = inject(Location);

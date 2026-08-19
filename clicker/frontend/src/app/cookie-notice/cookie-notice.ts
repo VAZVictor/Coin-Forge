@@ -9,7 +9,7 @@ const DISMISS_STORAGE_KEY = 'coinforge.cookieNoticeDismissed';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
   templateUrl: './cookie-notice.html',
-  styleUrl: './cookie-notice.css'
+  styleUrl: './cookie-notice.scss'
 })
 export class CookieNotice {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));

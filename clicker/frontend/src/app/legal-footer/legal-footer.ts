@@ -7,6 +7,6 @@ import { CopyrightNotice } from '../copyright-notice/copyright-notice';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, CopyrightNotice],
   templateUrl: './legal-footer.html',
-  styleUrl: './legal-footer.css'
+  styleUrl: './legal-footer.scss'
 })
 export class LegalFooter {}

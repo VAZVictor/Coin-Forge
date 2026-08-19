@@ -7,7 +7,7 @@ import { Location } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CopyrightNotice],
   templateUrl: './terms-of-service.html',
-  styleUrl: './terms-of-service.css'
+  styleUrl: './terms-of-service.scss'
 })
 export class TermsOfService {
   private readonly location = inject(Location);
