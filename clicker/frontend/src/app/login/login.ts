@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // <-- Added ActivatedRoute here
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { ForgotPassword } from './forgot-password/forgot-password';
+import { LegalFooter } from '../legal-footer/legal-footer';
 
 type AuthMode = 'signIn' | 'signUp';
 
@@ -10,7 +11,7 @@ type AuthMode = 'signIn' | 'signUp';
   selector: 'app-login',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, ForgotPassword, RouterLink],
+  imports: [ReactiveFormsModule, ForgotPassword, LegalFooter],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -27,7 +28,7 @@ export class Login {
   protected readonly isSubmitting = signal(false);
   protected readonly hasShakeError = signal(false);
   protected readonly statusMessage = signal<string | null>(null);
-  
+
   protected referralCode: string | null = null;
 
   protected readonly authForm = this.formBuilder.nonNullable.group({
