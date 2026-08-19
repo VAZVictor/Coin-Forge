@@ -8,7 +8,7 @@ import { GameNumberPipe } from '../shared/pipes/gameNumber.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GameNumberPipe, DecimalPipe],
   templateUrl: './reincarnation.html',
-  styleUrl: './reincarnation.css'
+  styleUrl: './reincarnation.scss'
 })
 export class Reincarnation {
   protected readonly gameState = inject(GameStateService);
