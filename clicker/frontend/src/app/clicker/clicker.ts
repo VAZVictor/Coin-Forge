@@ -33,7 +33,7 @@ const BONUS_ORB_MAX_RADIUS_PX = 56;
   selector: 'app-clicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './clicker.html',
-  styleUrl: './clicker.css',
+  styleUrl: './clicker.scss',
   host: {
     class: 'clicker-host'
   },

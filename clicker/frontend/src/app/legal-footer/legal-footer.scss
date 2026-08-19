@@ -36,3 +36,9 @@
     color: var(--color-border, #e1e6ef);
     font-size: 0.78rem;
 }
+/* Azure Blush legal footer */
+:host { display: block; width: 100%; }
+.legalFooter { width: 100%; gap: 8px; }
+.legalLink { color: #9bbbd8; font-size: .72rem; }
+.legalLink:hover, .legalLink:focus-visible { color: #ffa9d8; }
+.legalDivider { color: #617e9e; }

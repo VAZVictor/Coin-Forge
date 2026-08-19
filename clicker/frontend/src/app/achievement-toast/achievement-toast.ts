@@ -32,7 +32,7 @@ const CONFETTI_COLOR_CLASSES = ['confettiSky', 'confettiBloom', 'confettiCoin'];
   selector: 'app-achievement-toast',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './achievement-toast.html',
-  styleUrl: './achievement-toast.css',
+  styleUrl: './achievement-toast.scss',
   host: {
     class: 'achievement-toast-host'
   }

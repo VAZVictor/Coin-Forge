@@ -13,7 +13,7 @@ type AuthMode = 'signIn' | 'signUp';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, ForgotPassword, LegalFooter],
   templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  styleUrls: ['./login.scss']
 })
 export class Login {
   private readonly formBuilder = inject(FormBuilder);

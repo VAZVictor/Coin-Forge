@@ -1,0 +1,81 @@
+.reincarnationPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  width: 320px;
+}
+
+.reincarnationPanel.locked {
+  opacity: 0.65;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.reincarnationDescription {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  line-height: 1.45;
+}
+
+.reincarnationStats {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+}
+
+.statRow.highlight dd {
+  color: var(--color-bloom);
+  font-weight: 700;
+}
+
+.reincarnationButton {
+  margin-top: 4px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-bloom);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: filter var(--transition-fast);
+}
+
+.reincarnationButton:hover {
+  filter: brightness(1.06);
+}
+
+/* Azure Blush reincarnation prestige panel */
+:host { display: block; width: 100%; }
+.reincarnationPanel { position: relative; overflow: hidden; width: 100%; padding: 19px; border: 1px solid rgba(255, 164, 216, .25); border-radius: 21px; background: linear-gradient(145deg, rgba(36, 77, 115, .74), rgba(17, 32, 62, .88) 56%, rgba(35, 20, 60, .8)), rgba(10, 24, 46, .8); box-shadow: var(--shadow-card); }
+.reincarnationPanel::before { position: absolute; top: 0; right: 18px; left: 18px; height: 1px; content: ''; background: linear-gradient(90deg, transparent, rgba(172, 230, 255, .55), rgba(255, 177, 221, .42), transparent); }
+.reincarnationPanel.locked { border-style: dashed; border-color: rgba(169, 216, 255, .2); opacity: .68; background: linear-gradient(145deg, rgba(29, 56, 92, .58), rgba(15, 23, 47, .7)); }
+.panelTitle { margin: 0; color: #f5fbff; font-size: 1.07rem; }
+.reincarnationDescription { margin: 9px 0 14px; color: #b8d0e6; font-size: .76rem; line-height: 1.55; }
+.reincarnationStats { display: grid; gap: 6px; margin: 0 0 14px; }
+.statRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 9px; border: 1px solid rgba(183, 231, 255, .13); border-radius: 10px; background: rgba(5, 17, 37, .3); }
+.statRow dt { color: #afcbe2; font-size: .68rem; }
+.statRow dd { margin: 0; color: #e6f7ff; font-family: 'Space Grotesk', sans-serif; font-size: .77rem; font-weight: 700; }
+.statRow.highlight { border-color: rgba(255, 162, 214, .3); background: linear-gradient(90deg, rgba(255, 145, 207, .18), rgba(139, 221, 255, .07)); }
+.statRow.highlight dd { color: #ffd3ea; }
+.reincarnationButton { width: 100%; min-height: 40px; border: 1px solid rgba(238, 249, 255, .42); border-radius: 11px; color: #061526; background: linear-gradient(105deg, #a9e9ff 0%, #87cfff 47%, #ff98d1 100%); box-shadow: 0 13px 26px -15px rgba(103, 194, 255, .84), 0 10px 26px -18px rgba(255, 117, 190, .75); font-size: .73rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast); }
+.reincarnationButton:hover { filter: brightness(1.1) saturate(1.05); box-shadow: 0 16px 31px -13px rgba(103, 194, 255, .94), 0 14px 31px -16px rgba(255, 117, 190, .86); transform: translateY(-2px); }
+.reincarnationButton:active { transform: translateY(0); }

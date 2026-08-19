@@ -11,7 +11,7 @@ const BUY_AMOUNT_CYCLE: BuyAmount[] = [1, 10, 25, 'max'];
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GameNumberPipe],
   templateUrl: './upgradeList.html',
-  styleUrl: './upgradeList.css'
+  styleUrl: './upgradeList.scss'
 })
 export class UpgradeList {
   protected readonly gameState = inject(GameStateService);

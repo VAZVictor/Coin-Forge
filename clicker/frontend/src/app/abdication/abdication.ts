@@ -7,7 +7,7 @@ import { GameNumberPipe } from '../shared/pipes/gameNumber.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GameNumberPipe],
   templateUrl: './abdication.html',
-  styleUrl: './abdication.css'
+  styleUrl: './abdication.scss'
 })
 export class Abdication {
   protected readonly gameState = inject(GameStateService);

@@ -33,7 +33,7 @@ import { NumberFormatService } from '../core/services/numberFormat.service';
     LegalFooter
   ],
   templateUrl: './game-layout.html',
-  styleUrls: ['./game-layout.css']
+  styleUrls: ['./game-layout.scss']
 })
 export class GameLayout {
   protected readonly authService = inject(AuthService);

@@ -8,7 +8,7 @@ import { GameNumberPipe } from '../shared/pipes/gameNumber.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GameNumberPipe, DecimalPipe],
   templateUrl: './prestige.html',
-  styleUrl: './prestige.css'
+  styleUrl: './prestige.scss'
 })
 export class Prestige {
   protected readonly gameState = inject(GameStateService);

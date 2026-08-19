@@ -87,3 +87,7 @@
         width: 100%;
     }
 }
+/* Azure Blush cookie banner */
+.cookieBanner { border: 1px solid rgba(172, 226, 255, .31); border-radius: 18px; color: #cce8fa; background: linear-gradient(115deg, rgba(29, 70, 108, .92), rgba(35, 20, 61, .91)); box-shadow: var(--shadow-card); backdrop-filter: blur(18px); }
+.cookieLink { color: #ffa9d8; }
+.cookieDismiss { border: 1px solid rgba(255, 255, 255, .55); border-radius: 10px; color: #061527; background: linear-gradient(105deg, #a6e9ff, #ff98d2); font-weight: 800; }

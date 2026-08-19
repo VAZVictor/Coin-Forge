@@ -8,7 +8,7 @@ import { GameNumberPipe } from '../shared/pipes/gameNumber.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GameNumberPipe, DecimalPipe],
   templateUrl: './rebirthPanel.html',
-  styleUrl: './rebirthPanel.css'
+  styleUrl: './rebirthPanel.scss'
 })
 export class RebirthPanel {
   protected readonly gameState = inject(GameStateService);

@@ -1,0 +1,450 @@
+:host {
+  display: block;
+}
+
+.loginStage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--color-bg, #f3f6fb);
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-surface, #ffffff);
+  border: 2px solid var(--color-border, #e1e6ef);
+  border-radius: 24px;
+  box-shadow:
+    0 2px 4px rgba(24, 28, 40, 0.05),
+    0 16px 32px -16px rgba(79, 159, 219, 0.35);
+  padding: 32px 28px;
+  text-align: center;
+}
+
+.loginCard.shake {
+  animation: loginShake 400ms ease;
+}
+
+.mascotWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.mascotCoin {
+  font-size: 48px;
+  color: var(--color-coin, #b9862f);
+  animation: mascotBob 2.4s ease-in-out infinite;
+}
+
+.loginTitle {
+  margin: 4px 0 4px;
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-ink, #202433);
+}
+
+.loginTitle .dot {
+  color: var(--color-bloom, #e8749f);
+}
+
+.loginSubtitle {
+  margin: 0 0 24px;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft, #6b7280);
+  line-height: 1.4;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-ink-soft, #6b7280);
+}
+
+.fieldInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 2px solid var(--color-border, #e1e6ef);
+  background: var(--color-surface, #ffffff);
+  color: var(--color-ink, #202433);
+  font-size: 0.92rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.fieldInput:focus-visible {
+  outline: none;
+  border-color: var(--color-sky, #4f9fdb);
+  box-shadow: 0 0 0 3px var(--color-sky-soft, #e8f3fb);
+}
+
+.fieldInput[aria-invalid="true"] {
+  border-color: var(--color-bloom, #e8749f);
+}
+
+.fieldError {
+  font-size: 0.72rem;
+  color: var(--color-bloom, #e8749f);
+}
+
+.passwordRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordRow .fieldInput {
+  padding-right: 40px;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: var(--color-ink-soft, #6b7280);
+}
+
+.passwordToggle:hover {
+  background: var(--color-surface-muted, #eef2f8);
+}
+
+.passwordToggle .material-icons {
+  font-size: 18px;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rememberRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--color-ink-soft, #6b7280);
+}
+
+.rememberCheckbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-sky, #4f9fdb);
+}
+
+.forgotLink {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-sky, #4f9fdb);
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.statusMessage {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-sky, #4f9fdb);
+  text-align: center;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, var(--color-sky, #4f9fdb), var(--color-bloom, #e8749f));
+  color: white;
+  font-weight: 700;
+  font-size: 0.94rem;
+  box-shadow: 0 6px 0 -2px rgba(79, 159, 219, 0.35);
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 140ms ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.submitButton:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+.spinningCoin {
+  font-size: 18px;
+  animation: coinSpin 700ms linear infinite;
+}
+
+.loginFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 22px;
+}
+
+app-legal-footer {
+  margin-top: 2rem;
+}
+
+.footerLink {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft, #6b7280);
+}
+
+.footerLink:hover {
+  color: var(--color-sky, #4f9fdb);
+  text-decoration: underline;
+}
+
+@keyframes mascotBob {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(8deg);
+  }
+}
+
+@keyframes coinSpin {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes loginShake {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-6px, 0);
+  }
+
+  40% {
+    transform: translate(6px, 0);
+  }
+
+  60% {
+    transform: translate(-4px, 0);
+  }
+
+  80% {
+    transform: translate(4px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mascotCoin,
+  .spinningCoin,
+  .loginCard.shake {
+    animation: none;
+  }
+}
+/* Azure Blush authentication */
+:host { display: block; }
+.loginStage { min-height: 100dvh; padding: 28px 16px; background: transparent; }
+.loginCard { position: relative; overflow: hidden; max-width: 450px; padding: 40px 34px 29px; border: 1px solid rgba(176, 229, 255, .27); border-radius: 30px; background: linear-gradient(145deg, rgba(34, 78, 118, .84), rgba(14, 28, 56, .94) 58%, rgba(36, 19, 62, .88)), rgba(12, 25, 49, .84); box-shadow: 0 30px 75px -40px rgba(0, 0, 0, .98), 0 0 60px -42px rgba(119, 209, 255, .9), 0 0 60px -45px rgba(255, 145, 207, .7); backdrop-filter: blur(20px); }
+.loginCard::before { position: absolute; top: -122px; left: 50%; width: 320px; height: 240px; border-radius: 50%; content: ''; background: radial-gradient(circle, rgba(133, 220, 255, .3), rgba(255, 145, 207, .1) 43%, transparent 69%); transform: translateX(-50%); pointer-events: none; }
+.mascotCoin { position: relative; color: #c7f0ff; text-shadow: 0 5px 22px rgba(139, 221, 255, .63), 0 0 24px rgba(255, 145, 207, .35); }
+.loginTitle { position: relative; color: #f5fbff; font-size: 1.7rem; letter-spacing: -.045em; }
+.loginTitle .dot { color: var(--color-bloom); }
+.loginSubtitle { color: #b6cde3; }
+.fieldLabel { color: #cfe8fa; }
+.fieldInput { border: 1px solid rgba(175, 226, 255, .22); color: #f2f8ff; background: rgba(3, 16, 35, .4); }
+.fieldInput::placeholder { color: #7896b3; }
+.fieldInput:focus-visible { border-color: #9ee6ff; box-shadow: 0 0 0 4px rgba(139, 221, 255, .14), 0 0 18px -4px rgba(255, 145, 207, .28); }
+.passwordToggle, .forgotLink, .footerLink { color: #a7e3ff; }
+.passwordToggle:hover, .forgotLink:hover, .footerLink:hover { color: #ffd6ec; }
+.submitButton { border: 1px solid rgba(244, 251, 255, .57); color: #061527; background: linear-gradient(104deg, #b8edff, #82d4ff 44%, #ff9ad3); box-shadow: 0 15px 29px -17px rgba(86, 191, 255, .95), 0 13px 29px -20px rgba(255, 115, 190, .86); }
+.statusMessage, .fieldError { color: #ffc6e2; background: rgba(255, 145, 207, .1); }
+@media (max-width: 620px) { .loginCard { padding: 33px 21px 25px; } }
+
+/* Refinement: calm, intentional login hierarchy */
+.loginCard {
+  background: linear-gradient(145deg, rgba(29, 70, 108, .92), rgba(12, 27, 54, .97) 58%, rgba(29, 17, 53, .94));
+  box-shadow: 0 26px 64px -38px rgba(0, 0, 0, .98), 0 0 40px -36px rgba(139, 221, 255, .62);
+}
+
+.loginCard::before {
+  top: -152px;
+  width: 260px;
+  height: 205px;
+  opacity: .38;
+  background: radial-gradient(circle, rgba(158, 229, 255, .32), transparent 67%);
+}
+
+.loginCard::after {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  left: 28px;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(187, 235, 255, .58), transparent);
+}
+
+.mascotCoin {
+  color: #d8f5ff;
+  text-shadow: 0 4px 15px rgba(139, 221, 255, .45);
+}
+
+.fieldInput {
+  border-color: rgba(162, 218, 248, .35);
+  background: rgba(4, 15, 33, .56);
+  box-shadow: none;
+}
+
+.fieldInput[aria-invalid="true"] {
+  border-color: rgba(255, 159, 208, .8);
+  box-shadow: 0 0 0 1px rgba(255, 145, 207, .1);
+}
+
+.fieldError {
+  margin-top: -1px;
+  padding: 0;
+  color: #ffb8dc;
+  background: transparent;
+  font-weight: 500;
+}
+
+.passwordToggle {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(177, 230, 255, .3);
+  border-radius: 50%;
+  color: #bdeeff;
+  background: rgba(139, 221, 255, .09);
+  box-shadow: none;
+}
+
+.passwordToggle:hover {
+  border-color: rgba(255, 159, 208, .55);
+  color: #ffe5f4;
+  background: rgba(255, 145, 207, .14);
+}
+
+.submitButton {
+  box-shadow: 0 13px 24px -18px rgba(86, 191, 255, .88), 0 9px 22px -20px rgba(255, 115, 190, .64);
+}
+
+.loginFooter {
+  padding-top: 2px;
+}
+
+/* Final direction: quiet auth card, no decorative highlights */
+.loginCard {
+  background: linear-gradient(145deg, rgba(25, 59, 94, .94), rgba(11, 25, 50, .98) 62%, rgba(25, 15, 48, .96));
+  box-shadow: 0 24px 58px -39px rgba(0, 0, 0, .95), 0 1px 0 rgba(255, 255, 255, .07) inset;
+}
+
+.loginCard::before,
+.loginCard::after {
+  display: none;
+}
+
+.mascotCoin {
+  color: #d9f4ff;
+  text-shadow: none;
+}
+
+.fieldInput,
+.fieldInput:focus-visible,
+.fieldInput[aria-invalid="true"] {
+  box-shadow: none;
+}
+
+.fieldInput:focus-visible {
+  border-color: #9ee6ff;
+  outline: 0;
+}
+
+.fieldInput[aria-invalid="true"] {
+  border-color: #e29abe;
+}
+
+.passwordToggle {
+  border-color: rgba(174, 224, 248, .28);
+  color: #b9e8fa;
+  background: transparent;
+  box-shadow: none;
+}
+
+.passwordToggle:hover {
+  border-color: rgba(174, 224, 248, .52);
+  color: #eaf9ff;
+  background: rgba(139, 221, 255, .08);
+}
+
+.forgotLink,
+.footerLink {
+  min-height: 0;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 0;
+  color: #a9dff7;
+  background: transparent;
+  box-shadow: none;
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgotLink:hover,
+.footerLink:hover {
+  color: #ddf5ff;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.forgotLink:focus-visible,
+.footerLink:focus-visible {
+  border-radius: 5px;
+  outline-offset: 3px;
+}

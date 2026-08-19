@@ -187,3 +187,9 @@
     display: none;
   }
 }
+
+/* Azure Blush achievement notification */
+.achievementCard { border: 1px solid rgba(255, 173, 220, .55); border-radius: 18px; color: #edf8ff; background: linear-gradient(125deg, rgba(37, 92, 135, .98), rgba(65, 30, 91, .98)); box-shadow: 0 20px 50px -18px rgba(0, 0, 0, .82), 0 0 42px -13px rgba(255, 145, 207, .6); }
+.cardEyebrow { color: #bcefff; }
+.cardName { color: #f8fbff; }
+.cardDescription, .cardDismiss { color: #c0d5eb; }
