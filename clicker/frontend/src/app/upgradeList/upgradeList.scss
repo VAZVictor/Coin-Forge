@@ -1,0 +1,224 @@
+.upgradePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  width: 320px;
+}
+
+.upgradeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.upgradeControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buyAmountButton {
+  min-width: 44px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.buyAmountButton:hover {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+}
+
+.autoBuyToggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+  padding: 4px 10px 4px 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-ink-soft);
+  font-weight: 600;
+  font-size: 0.78rem;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.autoBuyToggle .material-icons {
+  font-size: 20px;
+}
+
+.autoBuyToggle:hover {
+  border-color: var(--color-sky);
+}
+
+.autoBuyToggle.active {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+  color: var(--color-sky);
+}
+
+.upgradeListItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.upgradeButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.upgradeButton:hover:not(:disabled) {
+  border-color: var(--color-sky);
+  background: var(--color-sky-soft);
+}
+
+.upgradeButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.upgradeIcon {
+  color: var(--color-sky);
+  flex-shrink: 0;
+}
+
+.upgradeInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  text-align: left;
+}
+
+.upgradeName {
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: flex;
+  gap: 6px;
+}
+
+.upgradeOwned {
+  color: var(--color-ink-soft);
+  font-weight: 400;
+}
+
+.upgradeDescription {
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+}
+
+.upgradeBuyMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.upgradeCost {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-coin);
+  font-variant-numeric: tabular-nums;
+}
+
+.upgradeBuyAmount {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+}
+/* Azure Blush upgrade deck */
+:host { display: block; width: 100%; }
+.upgradePanel { position: relative; overflow: hidden; width: 100%; padding: 19px; border: 1px solid rgba(164, 222, 255, .2); border-radius: 21px; background: linear-gradient(145deg, rgba(36, 77, 115, .74), rgba(17, 32, 62, .88) 56%, rgba(35, 20, 60, .8)), rgba(10, 24, 46, .8); box-shadow: var(--shadow-card); }
+.upgradePanel::before { position: absolute; top: 0; right: 18px; left: 18px; height: 1px; content: ''; background: linear-gradient(90deg, transparent, rgba(172, 230, 255, .55), rgba(255, 177, 221, .42), transparent); }
+.panelTitle { margin: 0; color: #f5fbff; font-size: 1.07rem; }
+.upgradePanel .panelTitle { display: flex; align-items: center; gap: 8px; }
+.upgradePanel .panelTitle::before { width: 9px; height: 9px; border-radius: 99px; content: ''; background: #a1e5ff; box-shadow: 0 0 13px rgba(139, 221, 255, .9); }
+.upgradeHeader { margin-bottom: 14px; }
+.upgradeControls { gap: 6px; }
+.buyAmountButton, .autoBuyToggle { min-height: 31px; border: 1px solid rgba(176, 226, 255, .22); border-radius: 9px; color: #cbe8fb; background: rgba(5, 19, 40, .42); font-size: .67rem; font-weight: 700; transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast); }
+.buyAmountButton { min-width: 35px; padding: 0 8px; }
+.autoBuyToggle { display: inline-flex; align-items: center; gap: 3px; padding: 0 8px; }
+.autoBuyToggle .material-icons { font-size: 16px; }
+.buyAmountButton:hover, .autoBuyToggle:hover, .autoBuyToggle.active { border-color: rgba(255, 161, 214, .58); color: #fff1fa; background: linear-gradient(110deg, rgba(139, 221, 255, .17), rgba(255, 145, 207, .18)); transform: translateY(-1px); }
+.upgradeListItems { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.upgradeRow { overflow: hidden; border: 1px solid rgba(177, 228, 255, .13); border-radius: 13px; background: rgba(5, 18, 37, .28); transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast); }
+.upgradeRow:not(.disabled):hover { border-color: rgba(151, 221, 255, .56); background: linear-gradient(101deg, rgba(104, 209, 255, .16), rgba(255, 145, 207, .13)); transform: translateX(3px); }
+.upgradeRow.disabled { opacity: .52; }
+.upgradeButton { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; width: 100%; gap: 10px; padding: 10px; color: var(--color-ink); text-align: left; }
+.upgradeIcon { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(160, 225, 255, .26); border-radius: 10px; color: #c8f0ff; background: linear-gradient(145deg, rgba(134, 219, 255, .17), rgba(255, 145, 207, .1)); font-size: 19px; }
+.upgradeInfo, .upgradeBuyMeta { min-width: 0; }
+.upgradeName { display: block; overflow: hidden; color: #edf9ff; font-size: .74rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.upgradeOwned, .upgradeBuyAmount { color: #a9c6df; font-size: .63rem; font-weight: 600; }
+.upgradeDescription { display: block; overflow: hidden; margin-top: 2px; color: #a9c6df; font-size: .65rem; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.upgradeBuyMeta { display: grid; justify-items: end; gap: 2px; }
+.upgradeCost { color: #ffc3e3; font-family: 'Space Grotesk', sans-serif; font-size: .72rem; font-weight: 700; }
+
+/* Refinement: one deliberate row border, never a nested double frame */
+.upgradeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.upgradeRow {
+  border: 1px solid rgba(177, 228, 255, .18);
+  background: rgba(5, 18, 37, .34);
+  box-shadow: none;
+}
+
+.upgradeButton {
+  border: 0 !important;
+  border-radius: 12px;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.upgradeButton:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: -4px;
+}
+
+.upgradeIcon {
+  border: 0;
+  background: rgba(139, 221, 255, .13);
+}

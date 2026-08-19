@@ -1,0 +1,20 @@
+:host {
+    display: block;
+}
+
+.copyrightLine {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-ink-soft, #6b7280);
+}
+
+.disclaimerLine {
+    margin: 4px 0 0;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: var(--color-ink-soft, #6b7280);
+    max-width: 480px;
+}
+/* Azure Blush copyright */
+.copyrightLine, .disclaimerLine { color: #87a4c0; }

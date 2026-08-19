@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.legalFooter {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.legalLinks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.legalLink {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-ink-soft, #6b7280);
+    text-decoration: none;
+}
+
+.legalLink:hover,
+.legalLink:focus-visible {
+    color: var(--color-sky, #4f9fdb);
+    text-decoration: underline;
+}
+
+.legalDivider {
+    color: var(--color-border, #e1e6ef);
+    font-size: 0.78rem;
+}
+/* Azure Blush legal footer */
+:host { display: block; width: 100%; }
+.legalFooter { width: 100%; gap: 8px; }
+.legalLink { color: #9bbbd8; font-size: .72rem; }
+.legalLink:hover, .legalLink:focus-visible { color: #ffa9d8; }
+.legalDivider { color: #617e9e; }
