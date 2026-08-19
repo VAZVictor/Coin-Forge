@@ -5,70 +5,49 @@
     </div>
 
     @if (mode() === 'signIn') {
-      <h1 class="loginTitle">Welcome back, high roller<span class="dot">.</span></h1>
-      <p class="loginSubtitle">Punch in your digits. We promise not to laugh if you forgot your password.</p>
+    <h1 class="loginTitle">Welcome back, high roller<span class="dot">.</span></h1>
+    <p class="loginSubtitle">Punch in your digits. We promise not to laugh if you forgot your password.</p>
     } @else {
-      <h1 class="loginTitle">Join the empire<span class="dot">.</span></h1>
-      <p class="loginSubtitle">One account, infinite clicking. Choose your credentials wisely.</p>
+    <h1 class="loginTitle">Join the empire<span class="dot">.</span></h1>
+    <p class="loginSubtitle">One account, infinite clicking. Choose your credentials wisely.</p>
     }
 
     <form class="loginForm" [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="fieldGroup">
         <label class="fieldLabel" for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          class="fieldInput"
-          formControlName="email"
-          placeholder="highroller@coinforge.gg"
+        <input id="email" type="email" class="fieldInput" formControlName="email" placeholder="highroller@coinforge.gg"
           autocomplete="email"
-          [attr.aria-invalid]="authForm.controls.email.invalid && authForm.controls.email.touched"
-        />
+          [attr.aria-invalid]="authForm.controls.email.invalid && authForm.controls.email.touched" />
         @if (authForm.controls.email.invalid && authForm.controls.email.touched) {
-          <span class="fieldError">That does not look like a real email, friend.</span>
+        <span class="fieldError">That does not look like a real email, friend.</span>
         }
       </div>
 
       <div class="fieldGroup">
         <label class="fieldLabel" for="password">Password</label>
         <div class="passwordRow">
-          <input
-            [type]="isPasswordVisible() ? 'text' : 'password'"
-            id="password"
-            class="fieldInput"
-            formControlName="password"
-            placeholder="••••••••"
+          <input [type]="isPasswordVisible() ? 'text' : 'password'" id="password" class="fieldInput"
+            formControlName="password" placeholder="••••••••"
             [autocomplete]="mode() === 'signUp' ? 'new-password' : 'current-password'"
-            [attr.aria-invalid]="authForm.controls.password.invalid && authForm.controls.password.touched"
-          />
-          <button
-            type="button"
-            class="passwordToggle"
-            (click)="togglePasswordVisibility()"
-            [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'"
-          >
+            [attr.aria-invalid]="authForm.controls.password.invalid && authForm.controls.password.touched" />
+          <button type="button" class="passwordToggle" (click)="togglePasswordVisibility()"
+            [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'">
             <span class="material-icons" aria-hidden="true">
               {{ isPasswordVisible() ? 'visibility_off' : 'visibility' }}
             </span>
           </button>
         </div>
         @if (authForm.controls.password.invalid && authForm.controls.password.touched) {
-          <span class="fieldError">Needs at least 8 characters. Yes, "coinsforever" counts.</span>
+        <span class="fieldError">Needs at least 8 characters. Yes, "coinsforever" counts.</span>
         }
       </div>
 
       @if (mode() === 'signUp') {
-        <div class="fieldGroup">
-          <label class="fieldLabel" for="confirmPassword">Confirm password</label>
-          <input
-            [type]="isPasswordVisible() ? 'text' : 'password'"
-            id="confirmPassword"
-            class="fieldInput"
-            formControlName="confirmPassword"
-            placeholder="••••••••"
-            autocomplete="new-password"
-          />
-        </div>
+      <div class="fieldGroup">
+        <label class="fieldLabel" for="confirmPassword">Confirm password</label>
+        <input [type]="isPasswordVisible() ? 'text' : 'password'" id="confirmPassword" class="fieldInput"
+          formControlName="confirmPassword" placeholder="••••••••" autocomplete="new-password" />
+      </div>
       }
 
       <div class="formRow">
@@ -78,41 +57,42 @@
         </label>
 
         @if (mode() === 'signIn') {
-          <button type="button" class="forgotLink" (click)="onForgotPassword()">
-            Forgot password?
-          </button>
+        <button type="button" class="forgotLink" (click)="onForgotPassword()">
+          Forgot password?
+        </button>
         }
       </div>
 
       @if (statusMessage(); as message) {
-        <p class="statusMessage" role="status">{{ message }}</p>
+      <p class="statusMessage" role="status">{{ message }}</p>
       }
 
       <button type="submit" class="submitButton" [disabled]="isSubmitting()">
         @if (isSubmitting()) {
-          <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
-          Spinning the wheel...
+        <span class="material-icons spinningCoin" aria-hidden="true">paid</span>
+        Spinning the wheel...
         } @else if (mode() === 'signIn') {
-          Let's gooo
-          <span class="material-icons" aria-hidden="true">arrow_forward</span>
+        Let's gooo
+        <span class="material-icons" aria-hidden="true">arrow_forward</span>
         } @else {
-          Start my empire
-          <span class="material-icons" aria-hidden="true">arrow_forward</span>
+        Start my empire
+        <span class="material-icons" aria-hidden="true">arrow_forward</span>
         }
       </button>
     </form>
 
     <div class="loginFooter">
       @if (mode() === 'signIn') {
-        <button type="button" class="footerLink" (click)="switchMode()">
-          New here? Start your empire
-        </button>
+      <button type="button" class="footerLink" (click)="switchMode()">
+        New here? Start your empire
+      </button>
       } @else {
-        <button type="button" class="footerLink" (click)="switchMode()">
-          Already an emperor? Sign in
-        </button>
+      <button type="button" class="footerLink" (click)="switchMode()">
+        Already an emperor? Sign in
+      </button>
       }
-      <a routerLink="/privacy" class="privacyLink">Privacy Policy</a>
     </div>
+
+    <app-legal-footer />
   </div>
 </div>
