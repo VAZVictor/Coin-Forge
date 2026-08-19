@@ -72,7 +72,7 @@ function ensureSchema(database: Database): void {
     );
   `);
 
-  // Safely migrate existing databases that don't have the 'is_vip' column yet
+  // Safely migrate existing databases that don't have the 'is_vip' column yet since 'is_vip' was added later on
   try {
     database.run(`ALTER TABLE users ADD COLUMN is_vip INTEGER NOT NULL DEFAULT 0`);
   } catch (error) {

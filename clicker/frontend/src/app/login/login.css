@@ -216,6 +216,10 @@
   margin-top: 22px;
 }
 
+app-legal-footer {
+  margin-top: 2rem;
+}
+
 .footerLink {
   font-size: 0.8rem;
   font-weight: 600;
@@ -227,38 +231,57 @@
   text-decoration: underline;
 }
 
-.privacyLink {
-  font-size: 0.75rem;
-  color: var(--color-ink-soft, #6b7280);
-  text-decoration: none;
-}
-
-.privacyLink:hover,
-.privacyLink:focus-visible {
-  color: var(--color-sky, #4f9fdb);
-  text-decoration: underline;
-}
-
 @keyframes mascotBob {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-6px) rotate(8deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(8deg);
+  }
 }
 
 @keyframes coinSpin {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
 }
 
 @keyframes loginShake {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(-6px, 0); }
-  40% { transform: translate(6px, 0); }
-  60% { transform: translate(-4px, 0); }
-  80% { transform: translate(4px, 0); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-6px, 0);
+  }
+
+  40% {
+    transform: translate(6px, 0);
+  }
+
+  60% {
+    transform: translate(-4px, 0);
+  }
+
+  80% {
+    transform: translate(4px, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascotCoin, .spinningCoin, .loginCard.shake {
+
+  .mascotCoin,
+  .spinningCoin,
+  .loginCard.shake {
     animation: none;
   }
 }

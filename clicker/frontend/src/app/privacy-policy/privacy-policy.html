@@ -1,9 +1,9 @@
 <div class="policyStage">
   <div class="policyCard">
-    <a routerLink="/login" class="backLink">
+    <button (click)="goBack()" class="backLink">
       <span class="material-icons" aria-hidden="true">arrow_back</span>
       Back
-    </a>
+    </button>
 
     <h1 class="policyTitle">Privacy Policy</h1>
     <p class="policyUpdated">Last updated: {{ lastUpdated }}</p>

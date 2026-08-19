@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Location } from '@angular/common';
+import { CopyrightNotice } from '../copyright-notice/copyright-notice';
+import { Location } from '@angular/common' 
 
 @Component({
-  selector: 'app-privacy-policy',
+  selector: 'app-terms-of-service',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './privacy-policy.html',
-  styleUrl: './privacy-policy.css'
+  imports: [CopyrightNotice],
+  templateUrl: './terms-of-service.html',
+  styleUrl: './terms-of-service.css'
 })
-export class PrivacyPolicy {
+export class TermsOfService {
   private readonly location = inject(Location);
 
   protected readonly lastUpdated = 'August 17, 2026';

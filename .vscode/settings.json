@@ -1,3 +1,24 @@
 {
-    "folder-color.pathColors": []
+    "folder-color.pathColors": [
+        {
+            "folderPath": "bdc\\clicker\\frontend\\src\\app\\core\\",
+            "color": "foldercolorizer.color_0087ff"
+        },
+        {
+            "folderPath": "bdc\\clicker\\frontend\\src\\app\\core\\services\\",
+            "color": "foldercolorizer.color_00d7ff"
+        },
+        {
+            "folderPath": "bdc\\clicker\\frontend\\src\\app\\game-layout\\",
+            "color": "foldercolorizer.color_ff8700"
+        },
+        {
+            "folderPath": "bdc\\clicker\\frontend\\src\\app\\login\\",
+            "color": "foldercolorizer.color_5faf00"
+        },
+        {
+            "folderPath": "bdc\\clicker\\frontend\\src\\app\\login\\forgot-password\\",
+            "color": "foldercolorizer.color_d7af5f"
+        }
+    ]
 }
