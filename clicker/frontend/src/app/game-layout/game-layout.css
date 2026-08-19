@@ -112,15 +112,3 @@
     max-width: 880px;
     padding-top: 12px;
 }
-
-.footerPrivacyLink {
-    font-size: 0.78rem;
-    color: var(--color-ink-soft);
-    text-decoration: none;
-}
-
-.footerPrivacyLink:hover,
-.footerPrivacyLink:focus-visible {
-    color: var(--color-sky);
-    text-decoration: underline;
-}
