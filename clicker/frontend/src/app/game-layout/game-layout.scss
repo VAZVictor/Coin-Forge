@@ -1,155 +1,18 @@
-.gameLayout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-    padding: 40px 16px 64px;
-}
-
-.offlineBanner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    border-radius: 20px;
-    background: #e8f4ff;
-    border: 1px solid #bcdffc;
-    color: #1f2937;
-    font-size: 0.88rem;
-    font-weight: 500;
-}
-
-.offlineBannerDismiss {
-    display: flex;
-    align-items: center;
-    color: #475569;
-}
-
-.gameHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    max-width: 880px;
-}
-
-.gameTitle {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-}
-
-.gameTitle .dot {
-    color: #8b5cf6;
-}
-
-.accountBar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.accountEmail {
-    font-size: 0.82rem;
-    color: #64748b;
-}
-
-.logoutButton {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 12px;
-    border-radius: 9999px;
-    border: 1px solid #cbd5e1;
-    background: #f8fafc;
-    color: #475569;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: border-color 140ms ease, color 140ms ease;
-}
-
-.logoutButton:hover {
-    border-color: #8b5cf6;
-    color: #8b5cf6;
-}
-
-.gameMain {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    width: 100%;
-    max-width: 880px;
-}
-
-.primaryColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    flex: 1 1 380px;
-}
-
-.sidePanels {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-@media (max-width: 720px) {
-    .gameMain {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-.gameFooter {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 880px;
-    padding-top: 12px;
-}
-/* Azure Blush layout refinement */
 :host { display: block; min-height: 100dvh; }
-.gameLayout { width: min(100%, 1400px); min-height: 100dvh; margin: 0 auto; gap: 26px; padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 48px) 40px; }
-.gameHeader { width: 100%; max-width: 1280px; min-height: 90px; padding: 18px 21px 18px 24px; border: 1px solid rgba(179, 231, 255, .2); border-radius: 22px; background: linear-gradient(105deg, rgba(25, 64, 102, .72), rgba(22, 20, 57, .7)), rgba(12, 28, 49, .72); box-shadow: 0 22px 55px -31px rgba(0, 0, 0, .95), 0 1px 0 rgba(255, 255, 255, .1) inset; backdrop-filter: blur(18px); }
-.gameHeader::before { width: 7px; height: 50px; border-radius: 99px; content: ''; background: linear-gradient(#a5e9ff, #80c9ff 45%, #ff96d0); box-shadow: 0 0 24px rgba(139, 221, 255, .72), 0 0 36px rgba(255, 145, 207, .24); }
-.gameTitle { margin: 0; color: #f7fcff; font-size: clamp(1.7rem, 3vw, 2.28rem); font-weight: 700; letter-spacing: -.068em; line-height: 1; text-shadow: 0 5px 24px rgba(144, 213, 255, .22); }
-.gameTitle::after { display: block; margin-top: 9px; content: 'INCREMENTAL EMPIRE'; color: #91dbff; font-family: Inter, sans-serif; font-size: .6rem; font-weight: 700; letter-spacing: .24em; }
-.gameTitle .dot { color: var(--color-bloom); text-shadow: 0 0 20px rgba(255, 145, 207, .9); }
-.accountBar { gap: 14px; }
-.accountEmail { max-width: 240px; overflow: hidden; padding: 6px 9px; border: 1px solid rgba(173, 224, 255, .15); border-radius: 99px; color: #c9e5fb; background: rgba(4, 15, 30, .22); font-size: .78rem; text-overflow: ellipsis; white-space: nowrap; }
-.logoutButton, .offlineBannerDismiss { border: 1px solid rgba(255, 167, 215, .28); border-radius: 12px; color: #ffd4ec; background: rgba(255, 145, 207, .09); transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast); }
-.logoutButton { min-height: 38px; padding: 8px 12px; }
-.logoutButton:hover, .offlineBannerDismiss:hover { border-color: rgba(255, 165, 216, .65); color: #fff2fa; background: rgba(255, 145, 207, .18); transform: translateY(-1px); }
-.offlineBanner { width: min(100%, 760px); padding: 12px 14px 12px 18px; border: 1px solid rgba(141, 221, 255, .32); border-radius: 16px; color: #e5f8ff; background: linear-gradient(110deg, rgba(66, 164, 214, .26), rgba(118, 94, 192, .22)); box-shadow: 0 16px 38px -25px rgba(104, 203, 255, .65); }
-.gameMain { display: grid; grid-template-columns: minmax(390px, .93fr) minmax(390px, 1.07fr); align-items: start; justify-content: stretch; width: 100%; max-width: 1280px; gap: 22px; }
-.primaryColumn, .sidePanels { width: 100%; min-width: 0; }
-.primaryColumn { gap: 24px; }
-.sidePanels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 14px; }
-.sidePanels app-upgrade-list, .sidePanels app-task { grid-column: 1 / -1; }
-.gameFooter { width: 100%; max-width: 1280px; padding-top: 8px; }
-@media (max-width: 900px) { .gameMain { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 620px) { .gameLayout { padding: 16px 12px 28px; gap: 18px; } .gameHeader { align-items: flex-start; min-height: auto; padding: 16px; } .gameHeader::before { display: none; } .accountBar { align-items: flex-end; flex-direction: column; gap: 7px; } .accountEmail { max-width: 145px; } .sidePanels { grid-template-columns: minmax(0, 1fr); } .sidePanels app-upgrade-list, .sidePanels app-task { grid-column: auto; } }
-
-/* Refinement: explicit right-column grid and a shared bottom alignment */
-.gameMain {
-  align-items: stretch;
-}
-
-.primaryColumn,
-.sidePanels {
-  align-self: stretch;
-}
-
-.sidePanels {
-  grid-template-rows: auto auto auto auto minmax(0, 1fr);
-  height: 100%;
-}
-
+.gameLayout { display: flex; width: min(100%, 1360px); min-height: 100dvh; flex-direction: column; gap: 14px; margin: 0 auto; padding: 14px clamp(14px, 3vw, 38px) 34px; }
+.gameHeader { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; min-height: 66px; padding: 12px 14px 12px 18px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); }
+.gameTitle { margin: 0; color: var(--color-ink); font-family: "Space Grotesk", sans-serif; font-size: clamp(1.15rem, 2.5vw, 1.48rem); font-weight: 600; letter-spacing: .075em; text-transform: uppercase; }
+.gameTitle .dot { color: var(--color-bloom); }
+.accountBar { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.accountEmail { max-width: min(32vw, 270px); overflow: hidden; padding: 7px 10px; border-left: 1px solid var(--color-border); color: var(--color-ink-soft); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+.logoutButton { display: inline-flex; min-height: 34px; align-items: center; gap: 6px; padding: 0 10px; border: 1px solid var(--color-border-strong); border-radius: 4px; color: var(--color-ink); background: transparent; font-size: .72rem; font-weight: 700; }
+.logoutButton:hover { border-color: var(--color-bloom); color: #e5b2c5; background: var(--color-bloom-soft); }
+.offlineBanner { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 9px 12px; border: 1px solid #405f74; border-radius: var(--radius-sm); color: #b8d4e5; background: #102435; font-size: .8rem; }
+.offlineBannerDismiss { border: 0; color: #b8d4e5; background: transparent; }
+.gameMain { display: grid; grid-template-columns: minmax(330px, .92fr) minmax(450px, 1.08fr); align-items: stretch; gap: 14px; width: 100%; }
+.primaryColumn, .sidePanels { min-width: 0; }
+.primaryColumn { display: flex; flex-direction: column; gap: 14px; }
+.sidePanels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto auto minmax(0, 1fr); align-content: stretch; gap: 10px; }
 .sidePanels app-upgrade-list { grid-column: 1 / -1; grid-row: 1; }
 .sidePanels app-rebirth-panel { grid-column: 1; grid-row: 2; }
 .sidePanels app-prestige { grid-column: 2; grid-row: 2; }
@@ -157,35 +20,6 @@
 .sidePanels app-ascension { grid-column: 2; grid-row: 3; }
 .sidePanels app-abdication { grid-column: 1 / -1; grid-row: 4; }
 .sidePanels app-task { grid-column: 1 / -1; grid-row: 5; min-height: 0; }
-
-@media (max-width: 900px) {
-  .sidePanels {
-    height: auto;
-    grid-template-rows: none;
-  }
-
-  .sidePanels app-upgrade-list,
-  .sidePanels app-rebirth-panel,
-  .sidePanels app-prestige,
-  .sidePanels app-reincarnation,
-  .sidePanels app-ascension,
-  .sidePanels app-abdication,
-  .sidePanels app-task {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .sidePanels app-upgrade-list,
-  .sidePanels app-abdication,
-  .sidePanels app-task {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 620px) {
-  .sidePanels app-upgrade-list,
-  .sidePanels app-abdication,
-  .sidePanels app-task {
-    grid-column: auto;
-  }
-}
+.gameFooter { display: flex; justify-content: center; padding-top: 2px; }
+@media (max-width: 960px) { .gameMain { grid-template-columns: 1fr; } .sidePanels { grid-template-rows: none; } .sidePanels > * { grid-column: auto !important; grid-row: auto !important; } .sidePanels app-upgrade-list, .sidePanels app-abdication, .sidePanels app-task { grid-column: 1 / -1 !important; } }
+@media (max-width: 620px) { .gameLayout { padding: 10px; } .gameHeader { grid-template-columns: 1fr; gap: 8px; } .accountBar { justify-content: space-between; } .accountEmail { max-width: 190px; padding-left: 0; border-left: 0; } .sidePanels { grid-template-columns: 1fr; } .sidePanels > *, .sidePanels app-upgrade-list, .sidePanels app-abdication, .sidePanels app-task { grid-column: auto !important; } }

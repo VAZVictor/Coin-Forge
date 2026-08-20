@@ -155,10 +155,16 @@ export class Clicker {
     }
   }
 
+  private getFeedbackLayer(): HTMLElement {
+    const clickerContainer = this.hostRef.nativeElement.querySelector('.clickerContainer') as HTMLElement | null;
+    return clickerContainer ?? this.hostRef.nativeElement;
+  }
+
   private spawnFloatingText(clientX: number, clientY: number, amount: number): void {
-    const hostRect = this.hostRef.nativeElement.getBoundingClientRect();
-    const localX = clientX - hostRect.left;
-    const localY = clientY - hostRect.top;
+    const feedbackLayer = this.getFeedbackLayer();
+    const feedbackRect = feedbackLayer.getBoundingClientRect();
+    const localX = clientX - feedbackRect.left;
+    const localY = clientY - feedbackRect.top;
 
     const el = this.renderer.createElement('span') as HTMLSpanElement;
     this.renderer.addClass(el, 'floatingText');
@@ -167,19 +173,20 @@ export class Clicker {
 
     const textNode = this.renderer.createText(`+${this.numberFormat.format(amount)}`);
     this.renderer.appendChild(el, textNode);
-    this.renderer.appendChild(this.hostRef.nativeElement, el);
+    this.renderer.appendChild(feedbackLayer, el);
 
     setTimeout(() => {
       if (el.parentNode) {
-        this.renderer.removeChild(this.hostRef.nativeElement, el);
+        this.renderer.removeChild(feedbackLayer, el);
       }
     }, FLOAT_TEXT_LIFETIME_MS);
   }
 
   private spawnParticles(clientX: number, clientY: number): void {
-    const hostRect = this.hostRef.nativeElement.getBoundingClientRect();
-    const localX = clientX - hostRect.left;
-    const localY = clientY - hostRect.top;
+    const feedbackLayer = this.getFeedbackLayer();
+    const feedbackRect = feedbackLayer.getBoundingClientRect();
+    const localX = clientX - feedbackRect.left;
+    const localY = clientY - feedbackRect.top;
 
     const particleCount =
       Math.floor(Math.random() * (MAX_PARTICLES - MIN_PARTICLES + 1)) + MIN_PARTICLES;
@@ -198,11 +205,11 @@ export class Clicker {
       this.renderer.setStyle(particle, '--dx', `${dx}px`);
       this.renderer.setStyle(particle, '--dy', `${dy}px`);
 
-      this.renderer.appendChild(this.hostRef.nativeElement, particle);
+      this.renderer.appendChild(feedbackLayer, particle);
 
       setTimeout(() => {
         if (particle.parentNode) {
-          this.renderer.removeChild(this.hostRef.nativeElement, particle);
+          this.renderer.removeChild(feedbackLayer, particle);
         }
       }, PARTICLE_LIFETIME_MS);
     }

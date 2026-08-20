@@ -1,133 +1,51 @@
-/* Global design foundation only. Component appearance lives beside its Angular component. */
-
 :root {
-  --color-bg: #061323;
-  --color-surface: #10243d;
-  --color-surface-muted: #183352;
-  --color-surface-raised: #1c3b60;
-  --color-border: rgba(164, 222, 255, 0.19);
-  --color-border-strong: rgba(171, 229, 255, 0.42);
-  --color-ink: #f5fbff;
-  --color-ink-soft: #a9c2dc;
-  --color-sky: #8bddff;
-  --color-sky-soft: rgba(139, 221, 255, 0.15);
-  --color-bloom: #ff91cf;
-  --color-bloom-soft: rgba(255, 145, 207, 0.15);
-  --color-coin: #d1f1ff;
-  --color-coin-soft: rgba(209, 241, 255, 0.14);
-  --color-success: #a8d9ff;
-  --color-danger: #ff9fce;
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 26px;
-  --shadow-card: 0 22px 58px -31px rgba(0, 7, 22, 0.95), 0 1px 0 rgba(255, 255, 255, 0.075) inset;
-  --shadow-glow: 0 0 0 1px rgba(139, 221, 255, 0.07), 0 24px 80px -34px rgba(93, 186, 255, 0.34);
-  --transition-fast: 160ms cubic-bezier(.2, .8, .2, 1);
-  --transition-spring: 260ms cubic-bezier(.2, 1.35, .35, 1);
+  --color-bg: #081019;
+  --color-surface: #0d1823;
+  --color-surface-muted: #111f2d;
+  --color-surface-raised: #162738;
+  --color-border: #213544;
+  --color-border-strong: #41677f;
+  --color-ink: #edf3f6;
+  --color-ink-soft: #91a6b5;
+  --color-sky: #83b5d8;
+  --color-sky-soft: #142b3d;
+  --color-bloom: #c9819f;
+  --color-bloom-soft: #2b1d2b;
+  --color-coin: #a9c9df;
+  --color-success: #8db8a6;
+  --color-danger: #d08b9d;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-card: none;
+  --shadow-glow: none;
+  --transition-fast: 140ms ease;
+  --transition-spring: 180ms ease;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  min-width: 320px;
-  min-height: 100%;
-  color-scheme: dark;
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; color-scheme: dark; }
 body {
   min-width: 320px;
   min-height: 100dvh;
   margin: 0;
   color: var(--color-ink);
-  background:
-    radial-gradient(ellipse 52rem 32rem at -8% -12%, rgba(75, 195, 255, 0.38), transparent 63%),
-    radial-gradient(ellipse 42rem 34rem at 108% 6%, rgba(255, 118, 194, 0.29), transparent 64%),
-    radial-gradient(ellipse 35rem 25rem at 48% 110%, rgba(80, 166, 255, 0.16), transparent 68%),
-    linear-gradient(138deg, #061525 0%, #091a31 48%, #150d2c 100%);
-  background-attachment: fixed;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #081019;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
-body::before {
-  position: fixed;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  content: '';
-  opacity: 0.6;
-  background-image:
-    linear-gradient(rgba(185, 232, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 178, 219, 0.027) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.92), transparent 88%);
-}
-
-app-root {
-  display: block;
-  min-height: 100dvh;
-}
-
-h1, h2, h3, .numeric {
-  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-}
-
-h1, h2, h3, p {
-  margin-top: 0;
-}
-
-button, input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible {
-  outline: 3px solid var(--color-sky);
-  outline-offset: 3px;
-}
-
-a {
-  color: inherit;
-}
-
-::selection {
-  color: #061526;
-  background: #afeaff;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #071426;
-}
-
-::-webkit-scrollbar-thumb {
-  border: 3px solid #071426;
-  border-radius: 999px;
-  background: linear-gradient(#83d8ff, #f78ac6);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}
+app-root { display: block; min-height: 100dvh; }
+h1, h2, h3, .numeric { font-family: "Space Grotesk", Inter, system-ui, sans-serif; }
+h1, h2, h3, p { margin-top: 0; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 2px; }
+a { color: inherit; }
+::selection { color: #081019; background: var(--color-sky); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #081019; }
+::-webkit-scrollbar-thumb { border: 3px solid #081019; border-radius: 99px; background: #36566b; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 1ms !important; } }
