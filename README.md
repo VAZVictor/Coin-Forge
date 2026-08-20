@@ -137,9 +137,9 @@ The password-reset domain flow is implemented: the backend creates time-limited 
 
 ## Styling notes
 
-The visual system lives in `frontend/src/styles.css`. It uses CSS custom properties for the color palette, spacing, radii, shadows and motion timing, then applies a consistent enhancement layer to the existing component structure. This preserves the game's templates and TypeScript game calculations while keeping the UI easy to retheme.
+The visual system uses a small global token base in `frontend/src/styles.css` and component-local SCSS files beside each Angular component. This keeps the interface easy to retheme while preserving the existing templates and TypeScript game calculations.
 
-The design deliberately uses cyan, violet, gold, teal and rose accents with strong luminance differences, so component states remain distinguishable without relying on red-green contrast alone.
+The current **Midnight Ledger** direction uses matte midnight-navy surfaces, restrained light-blue data and interaction accents, and muted rose only for selected reward or status states. Component states remain distinguishable through luminance, borders, text labels, icons and shape rather than relying on red-green contrast alone.
 
 ## License status
 
