@@ -15,8 +15,8 @@ Coin Forge is a full-stack Angular application with a responsive frontend, an Ex
 | Production | Six purchaseable production upgrades: Auto Clicker, Assistant, Workshop, Factory, Laboratory, and Bank. Costs follow exponential scaling. |
 | Buying tools | Single, multi-buy and max-buy options, plus a cheapest-first Auto-Buy mode. |
 | Five reset layers | Rebirth, Prestige, Reincarnation, Ascension, and Abdication each exchange short-term progress for stronger long-term multipliers. |
-| Challenges | Four repeatable rebirth tasks reward strategic runs in which selected upgrades, or all upgrades, are deliberately skipped. |
-| Achievements | 19 milestones across clicks, coins, upgrades, reset layers, and playtime, including visual unlock toasts. |
+| Tasks | Four repeatable rebirth challanges reward strategic runs in which selected upgrades, or all upgrades, are deliberately skipped. |
+| Achievements | 24 milestones across clicks, coins, upgrades, reset layers, and playtime, including visual unlock toasts. |
 | Persistence | Account-tied server saves, automatic saving every ten seconds, a final unload-save attempt, and offline earnings capped at 24 hours. |
 | Accounts | Sign-up, login, persistent sessions, logout, and a password-reset flow. |
 | Presentation | Responsive dark game interface, gradients, high-contrast panels, particles, floating click text, achievement feedback, and reduced-motion support. |
@@ -61,7 +61,7 @@ clicker/
 | Server | Express 5, Angular SSR, signed cookie sessions, CORS and JSON API routes |
 | Storage | `sql.js` file-backed SQLite database for users, saves, reset tokens and VIP state |
 | Authentication | `bcryptjs` password hashing, signed session tokens and guarded gameplay routes |
-| UI | CSS design tokens, Space Grotesk and Inter, Material Icons, responsive layouts and reduced-motion support |
+| UI | SCSS design tokens, Space Grotesk and Inter, Material Icons, responsive layouts and reduced-motion support |
 
 ## Local development
 
@@ -79,7 +79,7 @@ npm install
 
 ### Start the backend
 
-The backend uses port `4000` when run as the compiled SSR server. A production deployment is designed around an environment-specific `JWT_SECRET`, `FRONTEND_ORIGIN` and secure cookie settings; the local values below represent the development profile.
+The backend uses port `4000` when run as the compiled SSR server. A production deployment is designed around an environment-specific `JWT_SECRET`, `FRONTEND_ORIGIN` and secure cookie settings; the local values below represent the development profile. Thrid party Environment Variables Recommended.
 
 ```bash
 cd clicker/backend
