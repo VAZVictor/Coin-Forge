@@ -130,11 +130,11 @@ export class GameStateService {
   readonly comboProgress = computed(() => this.comboCount() / COMBO_CAP);
   readonly comboMultiplier = computed(() => 1 + this.comboProgress() * COMBO_MAX_BONUS);
 
-  readonly rebirthMultiplier = computed(() => 1 + this.rebirthTokens() * 0.05);
-  readonly shardMultiplier = computed(() => Math.pow(1.5, this.worldShards()));
-  readonly soulMultiplier = computed(() => 1 + this.souls() * 0.25);
-  readonly divinityMultiplier = computed(() => Math.pow(2, this.divinity()));
-  readonly legacyMultiplier = computed(() => Math.pow(10, this.legacy()));
+  readonly rebirthMultiplier = computed(() => Math.pow(1.5, this.rebirthTokens()));
+  readonly shardMultiplier = computed(() => 1 + this.worldShards() * 0.25);
+  readonly soulMultiplier = computed(() => Math.pow(2, this.souls()));
+  readonly divinityMultiplier = computed(() => Math.pow(10, this.divinity()));
+  readonly legacyMultiplier = computed(() => Math.pow(100, this.legacy()));
 
   readonly prestigeMultiplier = computed(
     () =>
