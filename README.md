@@ -27,11 +27,11 @@ Every reset layer clears selected lower-level progress and awards a lasting mult
 
 | Realm | Unlock threshold | Earned currency | Permanent effect | Reset scope |
 | --- | ---: | --- | --- | --- |
-| Rebirth | 1M coins | Rebirth Tokens | Each token adds 5% to base click power and production. | Coins and upgrade ownership |
-| Prestige | 1T coins | World Shards | Each shard multiplies the Rebirth layer by 1.5x. | Coins, upgrades, and Rebirth Tokens |
-| Reincarnation | 1e20 coins | Souls | Each Soul adds 25% to all lower layers. | Coins, upgrades, Tokens, and Shards |
-| Ascension | 1e35 coins | Divinity | Each point doubles all lower-layer output. | Coins, upgrades, Tokens, Shards, and Souls |
-| Abdication | 1e60 coins | Legacy | Each point grants a 10x global multiplier. | All lower prestige currencies, coins, and upgrades |
+| Rebirth | 1M coins | Rebirth Tokens | Each shard multiplies the Click Base power by 1.5x. | Coins and upgrade ownership |
+| Prestige | 1T coins | World Shards | Each Shard adds 25% to all lower layers. | Coins, upgrades, and Rebirth Tokens |
+| Reincarnation | 1e20 coins | Souls | Each Soul doubles all lower-layer output. | Coins, upgrades, Tokens, and Shards |
+| Ascension | 1e35 coins | Divinity | Each point grants a 10x global multiplier. | Coins, upgrades, Tokens, Shards, and Souls |
+| Abdication | 1e60 coins | Legacy | Each point grants a 100x global multiplier. | All lower prestige currencies, coins, and upgrades |
 
 ## Architecture
 
