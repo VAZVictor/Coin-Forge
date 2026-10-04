@@ -6,5 +6,5 @@
 .achievementsGrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; margin: 12px 0 0; padding: 0; list-style: none; }
 .achievementTile { display: grid; min-height: 84px; align-content: center; justify-items: center; gap: 4px; padding: 7px 4px; border: 1px solid #203442; border-radius: 3px; color: #617788; background: #0a141e; text-align: center; }
 .achievementTile.unlocked { border-color: #52758b; color: #b8d6e7; background: #112233; }
-.achievementIcon { font-size: 19px; } .achievementName { color: inherit; font-size: .58rem; font-weight: 700; line-height: 1.25; } .achievementDescription { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: inherit; font-size: .51rem; line-height: 1.25; opacity: .76; }
+.achievementIcon { font-size: 19px; } .achievementName { color: inherit; font-size: .58rem; font-weight: 700; line-height: 1.25; } .achievementDescription { color: inherit; font-size: .51rem; line-height: 1.25; opacity: .76; width: 100%; }
 @media (max-width: 560px) { .achievementsGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
